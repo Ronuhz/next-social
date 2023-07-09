@@ -23,6 +23,7 @@ const ProfilePage = async () => {
 
 	const user = await prisma.user.findUnique({
 		where: { email: session?.user?.email! },
+		select: { name: true, bio: true, location: true, email: true, image: true },
 	})
 
 	async function saveAccountInfo({

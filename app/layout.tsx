@@ -20,8 +20,8 @@ export default function RootLayout({
 }) {
 	return (
 		<AuthProvider>
-			<html lang='en' suppressHydrationWarning>
-				<body className={inter.className}>
+			<html lang='en' className='antialiased' suppressHydrationWarning>
+				<body className={`${inter.className} `}>
 					<ThemeProvider attribute='class' forcedTheme='dark'>
 						<header>
 							<MainNav />

@@ -8,20 +8,22 @@ const MainNav = async () => {
 	const session = await getServerSession(authOptions)
 	return (
 		<>
-			<div className='w-full py-3 px-8'>
-				<nav className='flex flex-row items-center justify-between'>
+			<div className='w-full px-8 py-3'>
+				<nav className=' flex flex-row items-center justify-between'>
 					<Link href='/'>
-						<h1 className='font-bold text-2xl'>NEXT Social</h1>
+						<h1 className='text-2xl font-bold'>NEXT Social</h1>
 					</Link>
 					<ul className='inline-flex items-center gap-3'>
-						<li>{!session ? <SignInButton /> : <SignOutButton />}</li>
+						<li key='signButton'>
+							{!session ? <SignInButton /> : <SignOutButton />}
+						</li>
 						{session && (
-							<li>
+							<li key='profile'>
 								<Link href={`/profile`}>
 									<img
 										src={session?.user?.image ?? ''}
 										alt='My Profile'
-										className='rounded-full overflow-hidden h-8 w-8'
+										className='h-8 w-8 overflow-hidden rounded-full'
 									/>
 								</Link>
 							</li>

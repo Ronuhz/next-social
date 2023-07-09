@@ -37,7 +37,7 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
 				<Button variant='ghost' size='sm'>
-					<Edit size={18} />
+					<Edit size={16} />
 				</Button>
 			</DialogTrigger>
 			<DialogContent
@@ -48,7 +48,7 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 				<DialogHeader>
 					<DialogTitle>Edit profile</DialogTitle>
 					<DialogDescription>
-						Make changes to your profile here. Click save when you're done.
+						{"Make changes to your profile here. Click save when you're done."}
 					</DialogDescription>
 				</DialogHeader>
 				<Label htmlFor='bio'>Bio</Label>
@@ -77,7 +77,7 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 					}}
 				/>
 
-				<DialogFooter className='flex flex-col gap-2 sm:gap-0 pt-4'>
+				<DialogFooter className='flex flex-col gap-2 pt-4 sm:gap-0'>
 					{!isLoading ? (
 						<Button
 							type='submit'

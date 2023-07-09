@@ -6,7 +6,7 @@ import { signIn, signOut } from 'next-auth/react'
 export const SignInButton = () => {
 	return (
 		<Button size='sm' onClick={() => signIn('google')}>
-			Sign In
+			Log In
 		</Button>
 	)
 }
@@ -14,7 +14,7 @@ export const SignInButton = () => {
 export const SignOutButton = () => {
 	return (
 		<Button variant='outline' size='sm' onClick={() => signOut()}>
-			Sign Out
+			Log Out
 		</Button>
 	)
 }

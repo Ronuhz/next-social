@@ -5,10 +5,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 interface Props {
 	user: {
-		id: string
 		name: string | null
 		email: string | null
-		emailVerified: Date | null
 		image: string | null
 		bio: string | null
 		location: string | null
@@ -24,19 +22,17 @@ const Profile = async ({ user, saveAccountInfo, canBeEdited }: Props) => {
 
 	return (
 		<>
-			<h1 className='font-semibold text-xl sm:text-2xl p-3'>
+			<h1 className='p-3 text-xl font-semibold sm:text-2xl'>
 				{isItMyProfile ? 'My Profile' : `${user.name}'s profile`}
 			</h1>
-			<div className='flex flex-row items-center gap-4 bg-slate-800 bg-opacity-50 p-3 sm:p-6 rounded-2xl w-[22rem] sm:w-[32rem]'>
+			<div className='flex w-[22rem] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
 				<img
 					src={user?.image ?? ''}
-					width={64}
-					height={64}
 					alt='Profile Image'
-					className='h-fit w-fit rounded-full shadow-md shadow-black'
+					className='h-[72px] w-[72px] rounded-full sm:h-[96px] sm:w-[96px]'
 				/>
-				<div className='flex flex-col mb-auto'>
-					<p className='font-semibold text-lg sm:text-xl pb-0 sm:pb-2 inline-flex items-center gap-1'>
+				<div className='mb-auto flex flex-col overflow-hidden'>
+					<p className='inline-flex items-center gap-1 pb-0 text-lg font-semibold sm:pb-2 sm:text-xl'>
 						{user?.name}
 						{canBeEdited && (
 							<EditProfile
@@ -46,9 +42,9 @@ const Profile = async ({ user, saveAccountInfo, canBeEdited }: Props) => {
 							/>
 						)}
 					</p>
-					<p className='text-xs sm:text-base'>{user?.bio ?? ''}</p>
+					<p className='balance text-xs sm:text-base'>{user?.bio ?? ''}</p>
 					{user?.location && (
-						<p className='inline-flex items-center gap-1 text-gray-400 text-xs sm:text-base'>
+						<p className='balance inline-flex items-center gap-1 text-xs text-gray-400 sm:text-base'>
 							<MapPin size={16} />
 							{user?.location ?? ''}
 						</p>
