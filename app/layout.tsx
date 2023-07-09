@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { AuthProvider } from '@/components/auth-provider'
 import { Inter } from 'next/font/google'
 import MainNav from '@/components/main-nav'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,13 +20,14 @@ export default function RootLayout({
 }) {
 	return (
 		<AuthProvider>
-			<html lang='en'>
+			<html lang='en' suppressHydrationWarning>
 				<body className={inter.className}>
 					<ThemeProvider attribute='class' forcedTheme='dark'>
 						<header>
 							<MainNav />
 						</header>
 						<div>{children}</div>
+						<Toaster />
 					</ThemeProvider>
 				</body>
 			</html>
