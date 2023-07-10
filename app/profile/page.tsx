@@ -5,9 +5,11 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import Profile from '@/components/profile'
 
+export const revalidate = 300
+
 export const metadata = {
 	title: 'My Profile',
-	description: 'View and Edit your profile',
+	description: 'View and Edit your profile.',
 }
 
 interface saveAccountInfoProps {
@@ -23,9 +25,14 @@ const ProfilePage = async () => {
 
 	const user = await prisma.user.findUnique({
 		where: { email: session?.user?.email! },
-		select: { name: true, bio: true, location: true, email: true, image: true },
+		select: {
+			name: true,
+			bio: true,
+			location: true,
+			email: true,
+			image: true,
+		},
 	})
-
 	async function saveAccountInfo({
 		bio,
 		location,

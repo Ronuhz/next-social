@@ -22,7 +22,7 @@ const Profile = async ({ user, saveAccountInfo, canBeEdited }: Props) => {
 
 	return (
 		<>
-			<h1 className='p-3 text-xl font-semibold sm:text-2xl'>
+			<h1 className='p-3 text-xl font-semibold uppercase sm:text-2xl'>
 				{isItMyProfile ? 'My Profile' : `${user.name}'s profile`}
 			</h1>
 			<div className='flex w-[22rem] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
@@ -32,7 +32,7 @@ const Profile = async ({ user, saveAccountInfo, canBeEdited }: Props) => {
 					className='h-[72px] w-[72px] rounded-full sm:h-[96px] sm:w-[96px]'
 				/>
 				<div className='mb-auto flex flex-col overflow-hidden'>
-					<p className='inline-flex items-center gap-1 pb-0 text-lg font-semibold sm:pb-2 sm:text-xl'>
+					<p className='inline-flex items-center gap-1 pb-0 font-semibold sm:pb-2 sm:text-xl'>
 						{user?.name}
 						{canBeEdited && (
 							<EditProfile
@@ -44,7 +44,7 @@ const Profile = async ({ user, saveAccountInfo, canBeEdited }: Props) => {
 					</p>
 					<p className='balance text-xs sm:text-base'>{user?.bio ?? ''}</p>
 					{user?.location && (
-						<p className='balance inline-flex items-center gap-1 text-xs text-gray-400 sm:text-base'>
+						<p className='balance inline-flex items-center gap-1 text-xs text-muted-foreground sm:text-base'>
 							<MapPin size={16} />
 							{user?.location ?? ''}
 						</p>

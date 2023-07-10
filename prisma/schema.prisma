@@ -49,8 +49,21 @@ model User {
   image         String?
   bio           String?
   location      String?
+  posts         Post[]
   accounts      Account[]
   sessions      Session[]
+
+  @@index([email, id])
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String?  @db.Text
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@index([userId])
 }
 
 model VerificationToken {

@@ -20,14 +20,16 @@ export default function RootLayout({
 }) {
 	return (
 		<AuthProvider>
-			<html lang='en' className='antialiased' suppressHydrationWarning>
-				<body className={`${inter.className} `}>
-					<ThemeProvider attribute='class' forcedTheme='dark'>
+			<html lang='en' className='subpixel-antialiased' suppressHydrationWarning>
+				<body className={`${inter.className}`}>
+					<ThemeProvider attribute='class' defaultTheme='dark'>
 						<header>
 							<MainNav />
 						</header>
-						<div>{children}</div>
-						<Toaster />
+						<main>
+							{children}
+							<Toaster />
+						</main>
 					</ThemeProvider>
 				</body>
 			</html>

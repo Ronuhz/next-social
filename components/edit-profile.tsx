@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Edit, Loader2 } from 'lucide-react'
+import { Edit3, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -37,13 +37,14 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
 				<Button variant='ghost' size='sm'>
-					<Edit size={16} />
+					<Edit3 size={16} />
 				</Button>
 			</DialogTrigger>
 			<DialogContent
 				className='sm:max-w-[425px]'
-				onEscapeKeyDown={(e) => e.preventDefault()}
-				onPointerDownOutside={(e) => isLoading && e.preventDefault()}
+				onEscapeKeyDown={(e) => (isLoading ? e.preventDefault() : {})}
+				disabled={isLoading}
+				onPointerDownOutside={(e) => (isLoading ? e.preventDefault() : {})}
 			>
 				<DialogHeader>
 					<DialogTitle>Edit profile</DialogTitle>
@@ -51,33 +52,37 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 						{"Make changes to your profile here. Click save when you're done."}
 					</DialogDescription>
 				</DialogHeader>
-				<Label htmlFor='bio'>Bio</Label>
-				<Textarea
-					id='bio'
-					placeholder="ex. I'm a ..."
-					defaultValue={bio}
-					disabled={isLoading}
-					rows={3}
-					maxLength={100}
-					className='resize-none'
-					onChange={(e) => {
-						setAccountInfo((prev) => ({ ...prev, bio: e.target.value }))
-					}}
-				/>
-				<Label htmlFor='location'>Location</Label>
-				<Input
-					type='text'
-					id='location'
-					placeholder='ex. New York'
-					defaultValue={location}
-					disabled={isLoading}
-					maxLength={30}
-					onChange={(e) => {
-						setAccountInfo((prev) => ({ ...prev, location: e.target.value }))
-					}}
-				/>
+				<div className='space-y-1'>
+					<Label htmlFor='bio'>Bio</Label>
+					<Textarea
+						id='bio'
+						placeholder='Tell us a little bit about yourself'
+						defaultValue={bio}
+						disabled={isLoading}
+						rows={3}
+						maxLength={100}
+						className='resize-none'
+						onChange={(e) => {
+							setAccountInfo((prev) => ({ ...prev, bio: e.target.value }))
+						}}
+					/>
+				</div>
+				<div className='space-y-1'>
+					<Label htmlFor='location'>Location</Label>
+					<Input
+						type='text'
+						id='location'
+						placeholder='ex. New York'
+						defaultValue={location}
+						disabled={isLoading}
+						maxLength={30}
+						onChange={(e) => {
+							setAccountInfo((prev) => ({ ...prev, location: e.target.value }))
+						}}
+					/>
+				</div>
 
-				<DialogFooter className='flex flex-col gap-2 pt-4 sm:gap-0'>
+				<DialogFooter>
 					{!isLoading ? (
 						<Button
 							type='submit'
@@ -108,14 +113,6 @@ const EditProfile = ({ bio, location, saveAccountInfo }: Props) => {
 							Saving
 						</Button>
 					)}
-					<Button
-						type='button'
-						variant='secondary'
-						disabled={isLoading}
-						onClick={() => setIsOpen(false)}
-					>
-						Cancel
-					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

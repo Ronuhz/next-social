@@ -3,10 +3,24 @@ import Profile from '@/components/profile'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { Metadata } from 'next'
 
 interface Props {
 	params: {
 		id: string
+	}
+}
+
+export const revalidate = 300
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const user = await prisma.user.findUnique({
+		where: { id: params.id },
+		select: { name: true },
+	})
+	return {
+		title: `${user?.name + "'s profile" ?? 'Profile'}`,
+		description: 'View a users profile.',
 	}
 }
 
