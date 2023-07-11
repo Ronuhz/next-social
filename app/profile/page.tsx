@@ -1,9 +1,7 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
-import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import Profile from '@/components/profile'
+import Profile from './_components/profile'
+import { getSession } from '@/lib/session'
 
 export const revalidate = 300
 
@@ -13,7 +11,7 @@ export const metadata = {
 }
 
 const ProfilePage = async () => {
-	const session = await getServerSession(authOptions)
+	const session = await getSession()
 	if (!session) {
 		return redirect('/')
 	}
@@ -29,8 +27,6 @@ const ProfilePage = async () => {
 			image: true,
 		},
 	})
-
-	// TODO: FIX MY POSTS gap and move dives into the custom components
 
 	return (
 		<section className='flex flex-col items-center justify-center'>

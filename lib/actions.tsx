@@ -1,24 +1,19 @@
 'use server'
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
 import { prisma } from './prisma'
 import { revalidatePath } from 'next/cache'
+import { getSession } from './session'
 
-export async function CreateNewPost(content: string): Promise<void> {
+export async function createNewPost(content: string): Promise<void> {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			const session = await getServerSession(authOptions)
-			const user = await prisma.user.findUnique({
-				where: { email: session?.user?.email! },
-				select: { id: true },
-			})
+			const session = await getSession()
 
 			await prisma.post.create({
 				data: {
 					content,
 					user: {
-						connect: { id: user?.id },
+						connect: { id: session?.user?.id },
 					},
 				},
 			})
@@ -30,13 +25,13 @@ export async function CreateNewPost(content: string): Promise<void> {
 	})
 }
 
-export async function DeletePost(
+export async function deletePost(
 	postId: string,
 	userEmail: string
 ): Promise<void> {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			const session = await getServerSession(authOptions)
+			const session = await getSession()
 
 			if (session?.user?.email !== userEmail) {
 				reject()
@@ -51,20 +46,21 @@ export async function DeletePost(
 	})
 }
 
-interface SaveAccountInfoProps {
+interface saveAccountInfoProps {
 	bio: string
 	location: string
 }
 
-export async function SaveAccountInfo({
+export async function saveAccountInfo({
 	bio,
 	location,
-}: SaveAccountInfoProps): Promise<void> {
+}: saveAccountInfoProps): Promise<void> {
 	return new Promise<void>(async (resolve, reject) => {
-		const session = await getServerSession(authOptions)
+		const session = await getSession()
+
 		try {
 			await prisma.user.update({
-				where: { email: session?.user?.email! },
+				where: { id: session?.user?.id },
 				data: { bio, location },
 			})
 			resolve()

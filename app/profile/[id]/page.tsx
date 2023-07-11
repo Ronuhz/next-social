@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import Profile from '@/components/profile'
+import Profile from '../_components/profile'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	})
 	return {
 		title: `${user?.name + "'s profile" ?? 'Profile'}`,
-		description: 'View a users profile.',
+		description: 'View a users profile and their posts.',
 	}
 }
 

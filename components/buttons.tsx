@@ -17,8 +17,8 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
-import { CreateNewPost, DeletePost } from '@/lib/actions'
-import { SaveAccountInfo } from '@/lib/actions'
+import { createNewPost, deletePost } from '@/lib/actions'
+import { saveAccountInfo } from '@/lib/actions'
 
 export const SignInButton = (props: ButtonProps) => {
 	return (
@@ -114,7 +114,7 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 							type='submit'
 							onClick={() => {
 								setIsLoading(true)
-								SaveAccountInfo(accountInfo)
+								saveAccountInfo(accountInfo)
 									.then(() => setIsOpen(false))
 									.then(() =>
 										toast({
@@ -193,7 +193,7 @@ export const NewPostButton = () => {
 							disabled={content.length < 1}
 							onClick={() => {
 								setIsLoading(true)
-								CreateNewPost(content)
+								createNewPost(content)
 									.then(() => setIsOpen(false))
 									.then(() => toast({ description: 'Post created' }))
 									.finally(() => setIsLoading(false))
@@ -220,7 +220,7 @@ export const NewPostButton = () => {
 	)
 }
 
-interface DeletePostButtonProps {
+interface deletePostButtonProps {
 	postId: string
 	userEmail: string
 }
@@ -228,7 +228,7 @@ interface DeletePostButtonProps {
 export const DeletePostButton = ({
 	postId,
 	userEmail,
-}: DeletePostButtonProps) => {
+}: deletePostButtonProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { toast } = useToast()
 
@@ -241,7 +241,7 @@ export const DeletePostButton = ({
 					className='mb-auto'
 					onClick={() => {
 						setIsLoading(true)
-						DeletePost(postId, userEmail)
+						deletePost(postId, userEmail)
 							.then(() => toast({ description: 'Post deleted' }))
 							.finally(() => setIsLoading(false))
 							.catch(() =>

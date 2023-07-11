@@ -1,14 +1,14 @@
 import { SignInButton } from '@/components/buttons'
 import { Separator } from '@/components/ui/separator'
-import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
 import Feed from '@/components/feed'
 import { Suspense } from 'react'
 import PostSkeleton from '@/components/skeletons'
+import { getCurrentUser } from '@/lib/session'
 
 export default async function Home() {
-	const session = await getServerSession(authOptions)
-	if (!session) {
+	const currentUser = await getCurrentUser()
+
+	if (!currentUser) {
 		return (
 			<section className='flex h-[60vh] flex-col items-center justify-center'>
 				<h1 className='balance pb-1 pt-20 text-center text-4xl font-extrabold'>

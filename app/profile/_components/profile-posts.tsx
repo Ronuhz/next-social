@@ -1,14 +1,16 @@
 import { prisma } from '@/lib/prisma'
-import Post from './post'
+import Post from '@/components/post'
 import { getSession } from '@/lib/session'
 
-const Feed = async () => {
-	const session = await getSession()
+interface Props {
+	id: string
+}
 
+const ProfilePosts = async ({ id }: Props) => {
+	const session = await getSession()
 	const posts = await prisma.post.findMany({
-		include: {
-			user: { select: { name: true, image: true, email: true } },
-		},
+		where: { userId: id },
+		include: { user: { select: { name: true, email: true, image: true } } },
 		orderBy: { createdAt: 'desc' },
 	})
 
@@ -21,4 +23,4 @@ const Feed = async () => {
 	)
 }
 
-export default Feed
+export default ProfilePosts
