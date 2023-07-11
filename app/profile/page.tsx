@@ -12,11 +12,6 @@ export const metadata = {
 	description: 'View and Edit your profile.',
 }
 
-interface saveAccountInfoProps {
-	bio: string
-	location: string
-}
-
 const ProfilePage = async () => {
 	const session = await getServerSession(authOptions)
 	if (!session) {
@@ -34,32 +29,12 @@ const ProfilePage = async () => {
 			image: true,
 		},
 	})
-	async function saveAccountInfo({
-		bio,
-		location,
-	}: saveAccountInfoProps): Promise<void> {
-		'use server'
-
-		return new Promise<void>(async (resolve, reject) => {
-			const session = await getServerSession(authOptions)
-			try {
-				await prisma.user.update({
-					where: { email: session?.user?.email! },
-					data: { bio, location },
-				})
-				resolve()
-				revalidatePath('/')
-			} catch (error) {
-				reject(error)
-			}
-		})
-	}
 
 	// TODO: FIX MY POSTS gap and move dives into the custom components
 
 	return (
 		<section className='flex flex-col items-center justify-center'>
-			<Profile user={user!} saveAccountInfo={saveAccountInfo} />
+			<Profile user={user!} />
 		</section>
 	)
 }

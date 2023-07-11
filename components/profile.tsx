@@ -1,5 +1,5 @@
 import { MapPin } from 'lucide-react'
-import EditProfile from '@/components/edit-profile'
+import { EditProfileButton } from '@/components/buttons'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import ProfilePic from './profile-pic'
@@ -16,10 +16,9 @@ interface Props {
 		bio: string | null
 		location: string | null
 	}
-	saveAccountInfo?: (data: any) => Promise<void>
 }
 
-const Profile = async ({ user, saveAccountInfo }: Props) => {
+const Profile = async ({ user }: Props) => {
 	const session = await getServerSession(authOptions)
 
 	const isItMyProfile = session?.user?.email == user.email
@@ -40,10 +39,9 @@ const Profile = async ({ user, saveAccountInfo }: Props) => {
 					<p className='inline-flex items-center gap-1 pb-0 font-semibold sm:pb-2 sm:text-xl'>
 						{user?.name}
 						{user?.email === session?.user?.email && (
-							<EditProfile
+							<EditProfileButton
 								bio={user?.bio ?? ''}
 								location={user?.location ?? ''}
-								saveAccountInfo={saveAccountInfo!}
 							/>
 						)}
 					</p>

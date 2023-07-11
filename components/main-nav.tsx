@@ -1,4 +1,4 @@
-import { SignOutDropdownItem } from './auth-buttons'
+import { SignOutDropdownItem } from './buttons'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
-import NewPost from './new-post'
+import { NewPostButton } from './buttons'
 import ProfilePic from './profile-pic'
 
 const MainNav = async () => {
@@ -30,7 +30,7 @@ const MainNav = async () => {
 						{session && (
 							<>
 								<li className='mb-1'>
-									<NewPost />
+									<NewPostButton />
 								</li>
 								<li>
 									<DropdownMenu>
