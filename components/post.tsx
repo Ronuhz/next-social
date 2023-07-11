@@ -1,7 +1,7 @@
-import { cn, getTimeAgo } from '@/lib/utils'
+import { getTimeAgo } from '@/lib/utils'
 import { Card, CardContent, CardHeader } from './ui/card'
 import Link from 'next/link'
-import { buttonVariants } from './ui/button'
+import ProfilePic from './profile-pic'
 
 export const revalidate = 216000
 
@@ -23,11 +23,12 @@ const Post = ({ userId, name, image, content, createdAt }: Props) => {
 					href={`/profile/${userId}`}
 					className={`inline-flex items-center gap-4`}
 				>
-					<img
+					<ProfilePic name={name} image={image} />
+					{/* <img
 						src={image ?? ''}
 						alt='Profile'
 						className='h-8 w-8 rounded-full'
-					/>
+					/> */}
 					<div>
 						<p className='font-semibold underline-offset-auto hover:underline'>
 							{name}

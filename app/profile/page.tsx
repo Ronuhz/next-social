@@ -26,6 +26,7 @@ const ProfilePage = async () => {
 	const user = await prisma.user.findUnique({
 		where: { email: session?.user?.email! },
 		select: {
+			id: true,
 			name: true,
 			bio: true,
 			location: true,
@@ -54,13 +55,11 @@ const ProfilePage = async () => {
 		})
 	}
 
+	// TODO: FIX MY POSTS gap and move dives into the custom components
+
 	return (
 		<section className='flex flex-col items-center justify-center'>
-			<Profile
-				user={user!}
-				saveAccountInfo={saveAccountInfo}
-				canBeEdited={true}
-			/>
+			<Profile user={user!} saveAccountInfo={saveAccountInfo} />
 		</section>
 	)
 }

@@ -14,13 +14,15 @@ import {
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useState } from 'react'
-import { toast, useToast } from '@/components/ui/use-toast'
+import { useToast } from '@/components/ui/use-toast'
 import { CreateNewPost } from '@/lib/actions'
 
 const NewPost = () => {
 	const [content, setContent] = useState('')
 	const [isOpen, setIsOpen] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+
+	const { toast } = useToast()
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>

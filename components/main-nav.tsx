@@ -14,29 +14,32 @@ import {
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
 import NewPost from './new-post'
+import ProfilePic from './profile-pic'
 
 const MainNav = async () => {
 	const session = await getServerSession(authOptions)
 	return (
 		<>
-			<div className='w-full px-6 pb-1 pt-2 sm:px-8'>
+			<div className='w-full px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
 				<nav className=' flex flex-row items-center justify-between'>
 					<Link href='/'>
 						<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 					</Link>
-					<ul className='inline-flex items-center gap-2'>
+					<ul className='inline-flex items-center gap-3'>
 						{/* <li>{!session && <SignInButton />}</li> */}
 						{session && (
 							<>
-								<NewPost />
+								<li className='mb-1'>
+									<NewPost />
+								</li>
 								<li>
 									<DropdownMenu>
 										<DropdownMenuTrigger asChild>
 											<Button variant='ghost' size='icon'>
-												<img
-													src={session?.user?.image ?? ''}
-													alt='My Profile'
-													className='h-8 w-8 overflow-hidden rounded-full'
+												<ProfilePic
+													name={session?.user?.name}
+													image={session?.user?.image}
+													className='h-8 w-8'
 												/>
 											</Button>
 										</DropdownMenuTrigger>

@@ -29,7 +29,14 @@ const ProfilePage = async ({ params }: Props) => {
 
 	const user = await prisma.user.findUnique({
 		where: { id: targetId },
-		select: { name: true, bio: true, location: true, email: true, image: true },
+		select: {
+			id: true,
+			name: true,
+			bio: true,
+			location: true,
+			email: true,
+			image: true,
+		},
 	})
 
 	if (!user) {
@@ -44,8 +51,8 @@ const ProfilePage = async ({ params }: Props) => {
 	}
 
 	return (
-		<section className='flex flex-col items-center justify-center'>
-			<Profile user={user!} canBeEdited={false} />
+		<section className='flex flex-col items-center justify-center '>
+			<Profile user={user!} />
 		</section>
 	)
 }

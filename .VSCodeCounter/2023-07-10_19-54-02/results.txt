@@ -1,0 +1,85 @@
+Date : 2023-07-10 19:54:02
+Directory : c:\Users\ronuh\Desktop\next-social
+Total : 40 files,  7458 codes, 79 comments, 293 blanks, all 7830 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          4 |      5,470 |          0 |          3 |      5,473 |
+| TypeScript JSX     |         25 |      1,533 |          6 |        193 |      1,732 |
+| TypeScript         |          4 |        202 |          3 |         40 |        245 |
+| JavaScript         |          3 |         87 |          2 |          3 |         92 |
+| Prisma             |          1 |         60 |          2 |         14 |         76 |
+| CSS                |          1 |         59 |         64 |         25 |        148 |
+| JSON with Comments |          1 |         26 |          2 |          1 |         29 |
+| Markdown           |          1 |         21 |          0 |         14 |         35 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                   | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                      |         40 |      7,458 |         79 |        293 |      7,830 |
+| . (Files)                                                              |          9 |      5,604 |          4 |         21 |      5,629 |
+| app                                                                    |          6 |        259 |         64 |         54 |        377 |
+| app (Files)                                                            |          3 |        138 |         64 |         33 |        235 |
+| app\api                                                                |          1 |         16 |          0 |          3 |         19 |
+| app\api\auth                                                           |          1 |         16 |          0 |          3 |         19 |
+| app\api\auth\[...nextauth]                                             |          1 |         16 |          0 |          3 |         19 |
+| app\profile                                                            |          2 |        105 |          0 |         18 |        123 |
+| app\profile (Files)                                                    |          1 |         60 |          0 |          9 |         69 |
+| app\profile\[id]                                                       |          1 |         45 |          0 |          9 |         54 |
+| components                                                             |         21 |      1,477 |          9 |        194 |      1,680 |
+| components (Files)                                                     |          8 |        403 |          2 |         40 |        445 |
+| components\ui                                                          |         13 |      1,074 |          7 |        154 |      1,235 |
+| lib                                                                    |          3 |         58 |          0 |         10 |         68 |
+| prisma                                                                 |          1 |         60 |          2 |         14 |         76 |
++------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                               | language           | code       | comment    | blank      | total      |
++------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\Users\ronuh\Desktop\next-social\.eslintrc.json                      | JSON               |          6 |          0 |          1 |          7 |
+| c:\Users\ronuh\Desktop\next-social\README.md                           | Markdown           |         21 |          0 |         14 |         35 |
+| c:\Users\ronuh\Desktop\next-social\app\api\auth\[...nextauth]\route.ts | TypeScript         |         16 |          0 |          3 |         19 |
+| c:\Users\ronuh\Desktop\next-social\app\globals.css                     | CSS                |         59 |         64 |         25 |        148 |
+| c:\Users\ronuh\Desktop\next-social\app\layout.tsx                      | TypeScript JSX     |         35 |          0 |          4 |         39 |
+| c:\Users\ronuh\Desktop\next-social\app\page.tsx                        | TypeScript JSX     |         44 |          0 |          4 |         48 |
+| c:\Users\ronuh\Desktop\next-social\app\profile\[id]\page.tsx           | TypeScript JSX     |         45 |          0 |          9 |         54 |
+| c:\Users\ronuh\Desktop\next-social\app\profile\page.tsx                | TypeScript JSX     |         60 |          0 |          9 |         69 |
+| c:\Users\ronuh\Desktop\next-social\components.json                     | JSON               |         16 |          0 |          0 |         16 |
+| c:\Users\ronuh\Desktop\next-social\components\auth-buttons.tsx         | TypeScript JSX     |         24 |          0 |          5 |         29 |
+| c:\Users\ronuh\Desktop\next-social\components\auth-provider.tsx        | TypeScript JSX     |          8 |          0 |          4 |         12 |
+| c:\Users\ronuh\Desktop\next-social\components\edit-profile.tsx         | TypeScript JSX     |        115 |          0 |          8 |        123 |
+| c:\Users\ronuh\Desktop\next-social\components\main-nav.tsx             | TypeScript JSX     |         68 |          1 |          3 |         72 |
+| c:\Users\ronuh\Desktop\next-social\components\new-post.tsx             | TypeScript JSX     |         89 |          0 |          5 |         94 |
+| c:\Users\ronuh\Desktop\next-social\components\post.tsx                 | TypeScript JSX     |         40 |          1 |          6 |         47 |
+| c:\Users\ronuh\Desktop\next-social\components\profile.tsx              | TypeScript JSX     |         53 |          0 |          6 |         59 |
+| c:\Users\ronuh\Desktop\next-social\components\theme-provider.tsx       | TypeScript JSX     |          6 |          0 |          3 |          9 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\button.tsx            | TypeScript JSX     |         52 |          0 |          6 |         58 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\card.tsx              | TypeScript JSX     |         68 |          0 |          9 |         77 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\dialog-crossless.tsx  | TypeScript JSX     |        107 |          4 |         13 |        124 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\dialog.tsx            | TypeScript JSX     |        116 |          0 |         13 |        129 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\dropdown-menu.tsx     | TypeScript JSX     |        187 |          0 |         19 |        206 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\form.tsx              | TypeScript JSX     |        152 |          0 |         25 |        177 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\input.tsx             | TypeScript JSX     |         21 |          0 |          5 |         26 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\label.tsx             | TypeScript JSX     |         21 |          0 |          6 |         27 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\separator.tsx         | TypeScript JSX     |         27 |          0 |          5 |         32 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\textarea.tsx          | TypeScript JSX     |         20 |          0 |          5 |         25 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\toast.tsx             | TypeScript JSX     |        115 |          0 |         13 |        128 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\toaster.tsx           | TypeScript JSX     |         32 |          0 |          4 |         36 |
+| c:\Users\ronuh\Desktop\next-social\components\ui\use-toast.ts          | TypeScript         |        156 |          3 |         31 |        190 |
+| c:\Users\ronuh\Desktop\next-social\lib\actions.tsx                     | TypeScript JSX     |         28 |          0 |          4 |         32 |
+| c:\Users\ronuh\Desktop\next-social\lib\prisma.ts                       | TypeScript         |          2 |          0 |          1 |          3 |
+| c:\Users\ronuh\Desktop\next-social\lib\utils.ts                        | TypeScript         |         28 |          0 |          5 |         33 |
+| c:\Users\ronuh\Desktop\next-social\next.config.js                      | JavaScript         |          6 |          1 |          2 |          9 |
+| c:\Users\ronuh\Desktop\next-social\package-lock.json                   | JSON               |      5,397 |          0 |          1 |      5,398 |
+| c:\Users\ronuh\Desktop\next-social\package.json                        | JSON               |         51 |          0 |          1 |         52 |
+| c:\Users\ronuh\Desktop\next-social\postcss.config.js                   | JavaScript         |          6 |          0 |          1 |          7 |
+| c:\Users\ronuh\Desktop\next-social\prisma\schema.prisma                | Prisma             |         60 |          2 |         14 |         76 |
+| c:\Users\ronuh\Desktop\next-social\tailwind.config.js                  | JavaScript         |         75 |          1 |          0 |         76 |
+| c:\Users\ronuh\Desktop\next-social\tsconfig.json                       | JSON with Comments |         26 |          2 |          1 |         29 |
+| Total                                                                  |                    |      7,458 |         79 |        293 |      7,830 |
++------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

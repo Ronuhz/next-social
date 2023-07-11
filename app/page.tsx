@@ -2,8 +2,9 @@ import { SignInButton } from '@/components/auth-buttons'
 import { Separator } from '@/components/ui/separator'
 import { getServerSession } from 'next-auth'
 import { authOptions } from './api/auth/[...nextauth]/route'
-import { prisma } from '@/lib/prisma'
-import Post from '@/components/post'
+import Feed from '@/components/feed'
+import { Suspense } from 'react'
+import PostSkeleton from '@/components/skeletons'
 
 export default async function Home() {
 	const session = await getServerSession(authOptions)
@@ -24,24 +25,24 @@ export default async function Home() {
 		)
 	}
 
-	const posts = await prisma.post.findMany({
-		include: { user: { select: { id: true, name: true, image: true } } },
-		orderBy: { createdAt: 'desc' },
-	})
-
 	return (
-		<section className='flex flex-col items-center justify-center gap-4'>
-			<h1 className='pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
-			{posts.map((post) => (
-				<Post
-					key={post.id}
-					userId={post.userId}
-					name={post.user.name}
-					image={post.user.image}
-					content={post.content}
-					createdAt={post.createdAt}
-				/>
-			))}
+		<section className='flex flex-col items-center justify-center '>
+			<div className='w-fit gap-4 space-y-4'>
+				<h1 className='mr-auto pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
+				<Suspense
+					fallback={
+						<>
+							<PostSkeleton />
+							<PostSkeleton />
+							<PostSkeleton />
+							<PostSkeleton />
+							<PostSkeleton />
+						</>
+					}
+				>
+					<Feed />
+				</Suspense>
+			</div>
 		</section>
 	)
 }
