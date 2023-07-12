@@ -64,7 +64,7 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger asChild>
-				<Button variant='ghost' size='sm'>
+				<Button variant='ghost' size='sm' aria-label='Edit Profile'>
 					<Edit3 size={16} />
 				</Button>
 			</DialogTrigger>
@@ -158,7 +158,7 @@ export const NewPostButton = () => {
 		<QueryClientProvider client={queryClient}>
 			<Dialog open={isOpen} onOpenChange={setIsOpen}>
 				<DialogTrigger asChild>
-					<Button size='sm' className='gap-1'>
+					<Button size='sm' className='gap-1' aria-label='New Post'>
 						<Edit height={18} width={18} />
 						New Post
 					</Button>
@@ -244,6 +244,7 @@ export const DeletePostButton = ({ postId }: deletePostButtonProps) => {
 				<Button
 					variant='ghost'
 					size='icon'
+					aria-label='Delete Post'
 					className='mb-auto hover:text-red-600'
 					onClick={() => {
 						setIsLoading(true)
