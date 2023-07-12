@@ -38,7 +38,7 @@ const ProfilePosts = ({
 	return (
 		<QueryClientProvider client={queryClient}>
 			<InfiniteScroll
-				queryKeys={['posts']}
+				queryKeys={['posts', `profile-${userId}`]}
 				fetchFunction={({ pageParam }) => fetchPosts({ pageParam }, userId)}
 				returnFunction={(page: Props) => returnPosts(page, session)}
 				loadingSkeleton={

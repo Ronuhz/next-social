@@ -4,6 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import React from 'react'
 import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
+import { queryClient } from '@/lib/query'
 
 interface Props {
 	queryKeys: string[]
