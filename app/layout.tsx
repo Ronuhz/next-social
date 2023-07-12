@@ -20,7 +20,11 @@ export default function RootLayout({
 }) {
 	return (
 		<AuthProvider>
-			<html lang='en' className='subpixel-antialiased' suppressHydrationWarning>
+			<html
+				lang='en'
+				className='h-full w-full antialiased'
+				suppressHydrationWarning
+			>
 				<body className={`${inter.className}`}>
 					<ThemeProvider attribute='class' defaultTheme='dark'>
 						<MainNav />
