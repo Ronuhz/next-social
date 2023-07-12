@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { Session } from 'next-auth'
 import { DeletePostButton } from './buttons'
+import Linkify from 'linkify-react'
 
 export const revalidate = 216000
 
@@ -49,7 +50,17 @@ const Post = ({ post, session }: Props) => {
 					)}
 				</div>
 			</CardHeader>
-			<CardContent className='text-sm'>{post?.content}</CardContent>
+			<CardContent className='whitespace-pre-line break-words text-sm visited:text-red-500'>
+				<Linkify
+					as='p'
+					options={{
+						className:
+							'text-blue-400 font-normal visited:text-purple-500 hover:underline',
+					}}
+				>
+					{post?.content}
+				</Linkify>
+			</CardContent>
 		</Card>
 	)
 }
