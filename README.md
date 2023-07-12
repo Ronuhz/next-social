@@ -1,6 +1,6 @@
 # NEXT Social
 
-Build using Next.js, Next-Auth, Prisma and Planetscale
+Built using Next.js, Next-Auth, Prisma and Planetscale
 
 ## Getting Started
 
