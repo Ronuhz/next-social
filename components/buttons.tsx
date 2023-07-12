@@ -200,7 +200,9 @@ export const NewPostButton = () => {
 										.then(() => setIsOpen(false))
 										.then(() => toast({ description: 'Post created' }))
 										.finally(() => {
-											queryClient.invalidateQueries({ queryKey: ['posts'] })
+											queryClient.invalidateQueries({
+												queryKey: ['posts'],
+											})
 											setIsLoading(false)
 										})
 										.catch(() =>
@@ -248,7 +250,9 @@ export const DeletePostButton = ({ postId }: deletePostButtonProps) => {
 						deletePost(postId)
 							.then(() => toast({ description: 'Post deleted' }))
 							.finally(() => {
-								queryClient.invalidateQueries({ queryKey: ['posts'] })
+								queryClient.invalidateQueries({
+									queryKey: ['posts'],
+								})
 								setIsLoading(false)
 							})
 							.catch(() =>

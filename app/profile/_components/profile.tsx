@@ -1,11 +1,8 @@
 import { MapPin } from 'lucide-react'
 import { EditProfileButton } from '@/components/buttons'
 import ProfilePic from './profile-pic'
-import PostSkeleton from '@/components/skeletons'
-import { Suspense } from 'react'
 import ProfilePosts from './profile-posts'
 import { getSession } from '@/lib/session'
-import { prisma } from '@/lib/prisma'
 import { UserType } from '@/types'
 
 /**
@@ -17,12 +14,6 @@ const Profile = async ({ user }: UserType) => {
 	const session = await getSession()
 
 	const isItMyProfile = session?.user?.id == user.id
-
-	const posts = await prisma.post.findMany({
-		where: { userId: user.id },
-		include: { user: { select: { name: true, image: true } } },
-		orderBy: { createdAt: 'desc' },
-	})
 
 	return (
 		<div className='w-fit gap-4'>
@@ -59,17 +50,7 @@ const Profile = async ({ user }: UserType) => {
 				{isItMyProfile ? 'My Posts' : `Posts`}
 			</h1>
 			<div className='space-y-4'>
-				<Suspense
-					fallback={
-						<>
-							<PostSkeleton />
-							<PostSkeleton />
-							<PostSkeleton />
-						</>
-					}
-				>
-					<ProfilePosts posts={posts} session={session} />
-				</Suspense>
+				<ProfilePosts userId={user?.id} session={session} />
 			</div>
 		</div>
 	)
