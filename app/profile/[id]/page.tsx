@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import Profile from '@/components/profile'
+import Profile from '../_components/profile'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	})
 	return {
 		title: `${user?.name + "'s profile" ?? 'Profile'}`,
-		description: 'View a users profile.',
+		description: 'View a users profile and their posts.',
 	}
 }
 
@@ -29,7 +29,14 @@ const ProfilePage = async ({ params }: Props) => {
 
 	const user = await prisma.user.findUnique({
 		where: { id: targetId },
-		select: { name: true, bio: true, location: true, email: true, image: true },
+		select: {
+			id: true,
+			name: true,
+			bio: true,
+			location: true,
+			email: true,
+			image: true,
+		},
 	})
 
 	if (!user) {
@@ -44,8 +51,8 @@ const ProfilePage = async ({ params }: Props) => {
 	}
 
 	return (
-		<section className='flex flex-col items-center justify-center'>
-			<Profile user={user!} canBeEdited={false} />
+		<section className='flex flex-col items-center justify-center '>
+			<Profile user={user!} />
 		</section>
 	)
 }

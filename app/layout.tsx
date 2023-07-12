@@ -23,9 +23,7 @@ export default function RootLayout({
 			<html lang='en' className='subpixel-antialiased' suppressHydrationWarning>
 				<body className={`${inter.className}`}>
 					<ThemeProvider attribute='class' defaultTheme='dark'>
-						<header>
-							<MainNav />
-						</header>
+						<MainNav />
 						<main>
 							{children}
 							<Toaster />

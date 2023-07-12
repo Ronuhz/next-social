@@ -145,3 +145,23 @@
 .balance {
 	text-wrap: balance;
 }
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	@apply bg-background;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	@apply rounded-lg bg-accent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}

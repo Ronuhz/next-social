@@ -1,12 +1,11 @@
-import { SignInButton } from '@/components/auth-buttons'
+import { SignInButton } from '@/components/buttons'
 import { Separator } from '@/components/ui/separator'
-import { getServerSession } from 'next-auth'
-import { authOptions } from './api/auth/[...nextauth]/route'
-import { prisma } from '@/lib/prisma'
-import Post from '@/components/post'
+import Feed from '@/components/feed'
+import { getSession } from '@/lib/session'
 
 export default async function Home() {
-	const session = await getServerSession(authOptions)
+	const session = await getSession()
+
 	if (!session) {
 		return (
 			<section className='flex h-[60vh] flex-col items-center justify-center'>
@@ -24,24 +23,12 @@ export default async function Home() {
 		)
 	}
 
-	const posts = await prisma.post.findMany({
-		include: { user: { select: { id: true, name: true, image: true } } },
-		orderBy: { createdAt: 'desc' },
-	})
-
 	return (
-		<section className='flex flex-col items-center justify-center gap-4'>
-			<h1 className='pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
-			{posts.map((post) => (
-				<Post
-					key={post.id}
-					userId={post.userId}
-					name={post.user.name}
-					image={post.user.image}
-					content={post.content}
-					createdAt={post.createdAt}
-				/>
-			))}
+		<section className='flex flex-col items-center justify-center '>
+			<div className='w-[22rem] gap-4 space-y-4 sm:w-[32rem]'>
+				<h1 className='mr-auto pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
+				<Feed session={session} />
+			</div>
 		</section>
 	)
 }

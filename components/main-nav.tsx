@@ -1,6 +1,4 @@
-import { SignOutDropdownItem } from './auth-buttons'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { SignOutDropdownItem } from './buttons'
 import Link from 'next/link'
 import { Separator } from './ui/separator'
 import {
@@ -13,58 +11,71 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
-import NewPost from './new-post'
+import { NewPostButton } from './buttons'
+import ProfilePic from '../app/profile/_components/profile-pic'
+import { getCurrentUser } from '@/lib/session'
+
+interface ProfileDropdownProps {
+	currentUser: {
+		name?: string | null | undefined
+		email?: string | null | undefined
+		image?: string | null | undefined
+	}
+}
 
 const MainNav = async () => {
-	const session = await getServerSession(authOptions)
+	const currentUser = await getCurrentUser()
 	return (
-		<>
-			<div className='w-full px-6 pb-1 pt-2 sm:px-8'>
-				<nav className=' flex flex-row items-center justify-between'>
-					<Link href='/'>
-						<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
-					</Link>
-					<ul className='inline-flex items-center gap-2'>
-						{/* <li>{!session && <SignInButton />}</li> */}
-						{session && (
-							<>
-								<NewPost />
-								<li>
-									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
-											<Button variant='ghost' size='icon'>
-												<img
-													src={session?.user?.image ?? ''}
-													alt='My Profile'
-													className='h-8 w-8 overflow-hidden rounded-full'
-												/>
-											</Button>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent className='mr-2 w-40'>
-											<DropdownMenuLabel>My Account</DropdownMenuLabel>
-											<DropdownMenuSeparator />
-											<DropdownMenuGroup>
-												<Link href='/profile'>
-													<DropdownMenuItem className='cursor-pointer'>
-														Profile
-													</DropdownMenuItem>
-												</Link>
-											</DropdownMenuGroup>
-											<DropdownMenuGroup>
-												<DropdownMenuItem>
-													<SignOutDropdownItem />
-												</DropdownMenuItem>
-											</DropdownMenuGroup>
-										</DropdownMenuContent>
-									</DropdownMenu>
-								</li>
-							</>
-						)}
+		<header className='sticky top-0 z-20'>
+			<nav className=' flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
+				<Link href='/'>
+					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
+				</Link>
+				{currentUser && (
+					<ul className='inline-flex items-center gap-3'>
+						<li className='mb-1'>
+							<NewPostButton />
+						</li>
+						<li>
+							<ProfileDropdown currentUser={currentUser} />
+						</li>
 					</ul>
-				</nav>
-			</div>
+				)}
+			</nav>
 			<Separator />
-		</>
+		</header>
+	)
+}
+
+const ProfileDropdown = ({ currentUser }: ProfileDropdownProps) => {
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant='ghost' size='icon'>
+					<ProfilePic
+						name={currentUser?.name}
+						image={currentUser?.image}
+						className='h-8 w-8'
+					/>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent className='mr-2 w-40'>
+				<DropdownMenuLabel>My Account</DropdownMenuLabel>
+				<DropdownMenuSeparator />
+				<DropdownMenuGroup>
+					<Link href='/profile'>
+						<DropdownMenuItem className='cursor-pointer'>
+							Profile
+						</DropdownMenuItem>
+					</Link>
+				</DropdownMenuGroup>
+				<DropdownMenuGroup>
+					<DropdownMenuItem>
+						<SignOutDropdownItem />
+					</DropdownMenuItem>
+				</DropdownMenuGroup>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	)
 }
 

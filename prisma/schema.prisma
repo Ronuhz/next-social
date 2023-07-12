@@ -60,7 +60,7 @@ model Post {
   id        String   @id @default(cuid())
   content   String?  @db.Text
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 
   @@index([userId])

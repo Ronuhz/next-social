@@ -1,44 +1,55 @@
-import { cn, getTimeAgo } from '@/lib/utils'
+import { getTimeAgo } from '@/lib/utils'
 import { Card, CardContent, CardHeader } from './ui/card'
 import Link from 'next/link'
-import { buttonVariants } from './ui/button'
+import ProfilePic from '../app/profile/_components/profile-pic'
+import { Session } from 'next-auth'
+import { DeletePostButton } from './buttons'
 
 export const revalidate = 216000
 
 interface Props {
-	userId: string
-	name: string | null
-	image: string | null
-	content: string | null
-	createdAt: Date
+	post: {
+		id: string
+		content: string | null
+		createdAt: string | Date
+		userId: string
+		user: {
+			name: string | null
+			image: string | null
+		}
+	}
+	session: Session | null
 }
 
-// TODO: Make sure that it works with long texts
-
-const Post = ({ userId, name, image, content, createdAt }: Props) => {
+const Post = ({ post, session }: Props) => {
 	return (
 		<Card className='w-[22rem] sm:w-[32rem]'>
 			<CardHeader>
-				<Link
-					href={`/profile/${userId}`}
-					className={`inline-flex items-center gap-4`}
-				>
-					<img
-						src={image ?? ''}
-						alt='Profile'
-						className='h-8 w-8 rounded-full'
-					/>
-					<div>
-						<p className='font-semibold underline-offset-auto hover:underline'>
-							{name}
-						</p>
-						<p className='text-sm text-muted-foreground '>
-							{getTimeAgo(createdAt)}
-						</p>
-					</div>
-				</Link>
+				<div className='inline-flex items-center justify-between'>
+					<Link
+						href={`/profile/${post?.userId}`}
+						className={`inline-flex items-center gap-4`}
+					>
+						<ProfilePic
+							name={post?.user.name}
+							image={post?.user.image}
+							className='h-8 w-8'
+						/>
+						<div>
+							<p className='font-semibold underline-offset-auto hover:underline'>
+								{post?.user.name}
+							</p>
+							<p className='text-sm text-muted-foreground '>
+								{getTimeAgo(new Date(post.createdAt))}
+							</p>
+						</div>
+					</Link>
+					{session && post?.userId === session?.user?.id && (
+						<DeletePostButton postId={post?.id} />
+					)}
+				</div>
 			</CardHeader>
-			<CardContent className='text-sm'>{content}</CardContent>
+			<CardContent className='text-sm'>{post?.content}</CardContent>
 		</Card>
 	)
 }
