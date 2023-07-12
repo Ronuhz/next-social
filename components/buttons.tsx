@@ -19,6 +19,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { createNewPost, deletePost } from '@/lib/actions'
 import { saveAccountInfo } from '@/lib/actions'
+import { QueryClientProvider, useQueryClient } from '@tanstack/react-query'
+import { queryClient } from '@/lib/query'
 
 export const SignInButton = (props: ButtonProps) => {
 	return (
@@ -153,84 +155,86 @@ export const NewPostButton = () => {
 	const { toast } = useToast()
 
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogTrigger asChild>
-				<Button size='sm' className='gap-1'>
-					<Edit height={18} width={18} />
-					New Post
-				</Button>
-			</DialogTrigger>
-			<DialogContent
-				onEscapeKeyDown={(e) => (isLoading ? e.preventDefault() : {})}
-				disabled={isLoading}
-				onPointerDownOutside={(e) => (isLoading ? e.preventDefault() : {})}
-			>
-				<DialogHeader>
-					<DialogTitle>New post</DialogTitle>
-					<DialogDescription>Create a new post.</DialogDescription>
-				</DialogHeader>
-				<div className='space-y-1'>
-					<Label htmlFor='content'>Content</Label>
-					<Textarea
-						id='content'
-						placeholder='Write here what you want to tell to the world'
-						disabled={isLoading}
-						rows={6}
-						minLength={1}
-						maxLength={600}
-						className='resize-y'
-						onChange={(e) => setContent(e.target.value)}
-					/>
-					{content.length < 1 && (
-						<p className='text-sm text-red-700'>
-							Content must be at least 1 character long
-						</p>
-					)}
-				</div>
-				<DialogFooter>
-					{!isLoading ? (
-						<Button
-							disabled={content.length < 1}
-							onClick={() => {
-								setIsLoading(true)
-								createNewPost(content)
-									.then(() => setIsOpen(false))
-									.then(() => toast({ description: 'Post created' }))
-									.finally(() => setIsLoading(false))
-									.catch(() =>
-										toast({
-											variant: 'destructive',
-											title: 'Uh oh! Something went wrong.',
-											description: 'There was a problem with your request.',
+		<QueryClientProvider client={queryClient}>
+			<Dialog open={isOpen} onOpenChange={setIsOpen}>
+				<DialogTrigger asChild>
+					<Button size='sm' className='gap-1'>
+						<Edit height={18} width={18} />
+						New Post
+					</Button>
+				</DialogTrigger>
+				<DialogContent
+					onEscapeKeyDown={(e) => (isLoading ? e.preventDefault() : {})}
+					disabled={isLoading}
+					onPointerDownOutside={(e) => (isLoading ? e.preventDefault() : {})}
+				>
+					<DialogHeader>
+						<DialogTitle>New post</DialogTitle>
+						<DialogDescription>Create a new post.</DialogDescription>
+					</DialogHeader>
+					<div className='space-y-1'>
+						<Label htmlFor='content'>Content</Label>
+						<Textarea
+							id='content'
+							placeholder='Write here what you want to tell to the world'
+							disabled={isLoading}
+							rows={6}
+							minLength={1}
+							maxLength={600}
+							className='resize-y'
+							onChange={(e) => setContent(e.target.value)}
+						/>
+						{content.length < 1 && (
+							<p className='text-sm text-red-700'>
+								Content must be at least 1 character long
+							</p>
+						)}
+					</div>
+					<DialogFooter>
+						{!isLoading ? (
+							<Button
+								disabled={content.length < 1}
+								onClick={() => {
+									setIsLoading(true)
+									createNewPost(content)
+										.then(() => setIsOpen(false))
+										.then(() => toast({ description: 'Post created' }))
+										.finally(() => {
+											queryClient.invalidateQueries({ queryKey: ['posts'] })
+											setIsLoading(false)
 										})
-									)
-							}}
-						>
-							Post
-						</Button>
-					) : (
-						<Button disabled>
-							<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-							Posting
-						</Button>
-					)}
-				</DialogFooter>
-			</DialogContent>
-		</Dialog>
+										.catch(() =>
+											toast({
+												variant: 'destructive',
+												title: 'Uh oh! Something went wrong.',
+												description: 'There was a problem with your request.',
+											})
+										)
+								}}
+							>
+								Post
+							</Button>
+						) : (
+							<Button disabled>
+								<Loader2 className='mr-2 h-5 w-5 animate-spin' />
+								Posting
+							</Button>
+						)}
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+		</QueryClientProvider>
 	)
 }
 
 interface deletePostButtonProps {
 	postId: string
-	userEmail: string
 }
 
-export const DeletePostButton = ({
-	postId,
-	userEmail,
-}: deletePostButtonProps) => {
+export const DeletePostButton = ({ postId }: deletePostButtonProps) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const { toast } = useToast()
+	const queryClient = useQueryClient()
 
 	return (
 		<>
@@ -238,12 +242,15 @@ export const DeletePostButton = ({
 				<Button
 					variant='ghost'
 					size='icon'
-					className='mb-auto'
+					className='mb-auto hover:text-red-600'
 					onClick={() => {
 						setIsLoading(true)
-						deletePost(postId, userEmail)
+						deletePost(postId)
 							.then(() => toast({ description: 'Post deleted' }))
-							.finally(() => setIsLoading(false))
+							.finally(() => {
+								queryClient.invalidateQueries({ queryKey: ['posts'] })
+								setIsLoading(false)
+							})
 							.catch(() =>
 								toast({
 									variant: 'destructive',
@@ -257,7 +264,7 @@ export const DeletePostButton = ({
 				</Button>
 			) : (
 				<Button disabled variant='ghost' size='icon' className='mb-auto'>
-					<Loader2 className='mr-2 h-5 w-5 animate-spin' />
+					<Loader2 className='h-5 w-5 animate-spin' />
 				</Button>
 			)}
 		</>

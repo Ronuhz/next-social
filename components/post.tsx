@@ -11,12 +11,11 @@ interface Props {
 	post: {
 		id: string
 		content: string | null
-		createdAt: Date
+		createdAt: string | Date
 		userId: string
 		user: {
 			name: string | null
 			image: string | null
-			email: string | null
 		}
 	}
 	session: Session | null
@@ -41,12 +40,12 @@ const Post = ({ post, session }: Props) => {
 								{post?.user.name}
 							</p>
 							<p className='text-sm text-muted-foreground '>
-								{getTimeAgo(post?.createdAt)}
+								{getTimeAgo(new Date(post.createdAt))}
 							</p>
 						</div>
 					</Link>
-					{session && post?.user.email === session?.user?.email && (
-						<DeletePostButton postId={post?.id} userEmail={post?.user.email!} />
+					{session && post?.userId === session?.user?.id && (
+						<DeletePostButton postId={post?.id} />
 					)}
 				</div>
 			</CardHeader>

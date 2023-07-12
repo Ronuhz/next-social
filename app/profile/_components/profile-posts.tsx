@@ -1,25 +1,25 @@
-import { prisma } from '@/lib/prisma'
+'use client'
+
 import Post from '@/components/post'
-import { getSession } from '@/lib/session'
+import { Session } from 'next-auth'
+import { PostType } from '@/types'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/query'
 
 interface Props {
-	id: string
+	posts: PostType[]
+	session: Session | null
 }
 
-const ProfilePosts = async ({ id }: Props) => {
-	const session = await getSession()
-	const posts = await prisma.post.findMany({
-		where: { userId: id },
-		include: { user: { select: { name: true, email: true, image: true } } },
-		orderBy: { createdAt: 'desc' },
-	})
+// TODO: Implement InfiniteScroll
 
+const ProfilePosts = ({ posts, session }: Props) => {
 	return (
-		<>
+		<QueryClientProvider client={queryClient}>
 			{posts.map((post) => (
 				<Post key={post.id} post={post} session={session} />
 			))}
-		</>
+		</QueryClientProvider>
 	)
 }
 

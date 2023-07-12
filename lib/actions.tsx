@@ -25,20 +25,11 @@ export async function createNewPost(content: string): Promise<void> {
 	})
 }
 
-export async function deletePost(
-	postId: string,
-	userEmail: string
-): Promise<void> {
+export async function deletePost(postId: string): Promise<void> {
 	return new Promise<void>(async (resolve, reject) => {
 		try {
-			const session = await getSession()
-
-			if (session?.user?.email !== userEmail) {
-				reject()
-			}
-
 			await prisma.post.delete({ where: { id: postId } })
-			revalidatePath('')
+			revalidatePath('/')
 			resolve()
 		} catch (error) {
 			reject(error)

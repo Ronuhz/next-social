@@ -1,14 +1,12 @@
 import { SignInButton } from '@/components/buttons'
 import { Separator } from '@/components/ui/separator'
 import Feed from '@/components/feed'
-import { Suspense } from 'react'
-import PostSkeleton from '@/components/skeletons'
-import { getCurrentUser } from '@/lib/session'
+import { getSession } from '@/lib/session'
 
 export default async function Home() {
-	const currentUser = await getCurrentUser()
+	const session = await getSession()
 
-	if (!currentUser) {
+	if (!session) {
 		return (
 			<section className='flex h-[60vh] flex-col items-center justify-center'>
 				<h1 className='balance pb-1 pt-20 text-center text-4xl font-extrabold'>
@@ -27,21 +25,9 @@ export default async function Home() {
 
 	return (
 		<section className='flex flex-col items-center justify-center '>
-			<div className='w-fit gap-4 space-y-4'>
+			<div className='w-[22rem] gap-4 space-y-4 sm:w-[32rem]'>
 				<h1 className='mr-auto pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
-				<Suspense
-					fallback={
-						<>
-							<PostSkeleton />
-							<PostSkeleton />
-							<PostSkeleton />
-							<PostSkeleton />
-							<PostSkeleton />
-						</>
-					}
-				>
-					<Feed />
-				</Suspense>
+				<Feed session={session} />
 			</div>
 		</section>
 	)

@@ -1,27 +1,28 @@
 import { MapPin } from 'lucide-react'
 import { EditProfileButton } from '@/components/buttons'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import ProfilePic from './profile-pic'
 import PostSkeleton from '@/components/skeletons'
 import { Suspense } from 'react'
 import ProfilePosts from './profile-posts'
+import { getSession } from '@/lib/session'
+import { prisma } from '@/lib/prisma'
+import { UserType } from '@/types'
 
-interface Props {
-	user: {
-		id: string
-		name: string | null
-		email: string | null
-		image: string | null
-		bio: string | null
-		location: string | null
-	}
-}
+/**
+ *
+ * @param user The user whose profile is being viewed
+ */
 
-const Profile = async ({ user }: Props) => {
-	const session = await getServerSession(authOptions)
+const Profile = async ({ user }: UserType) => {
+	const session = await getSession()
 
-	const isItMyProfile = session?.user?.email == user.email
+	const isItMyProfile = session?.user?.id == user.id
+
+	const posts = await prisma.post.findMany({
+		where: { userId: user.id },
+		include: { user: { select: { name: true, image: true } } },
+		orderBy: { createdAt: 'desc' },
+	})
 
 	return (
 		<div className='w-fit gap-4'>
@@ -55,7 +56,7 @@ const Profile = async ({ user }: Props) => {
 				</div>
 			</div>
 			<h1 className='mr-auto p-3 pt-8 text-xl font-semibold uppercase sm:text-2xl'>
-				{isItMyProfile ? 'My Posts' : `${user.name}'s Posts`}
+				{isItMyProfile ? 'My Posts' : `Posts`}
 			</h1>
 			<div className='space-y-4'>
 				<Suspense
@@ -67,7 +68,7 @@ const Profile = async ({ user }: Props) => {
 						</>
 					}
 				>
-					<ProfilePosts id={user?.id} />
+					<ProfilePosts posts={posts} session={session} />
 				</Suspense>
 			</div>
 		</div>
