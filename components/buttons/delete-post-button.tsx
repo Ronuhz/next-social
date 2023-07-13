@@ -35,15 +35,11 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 					posts: page.posts.filter((post: PostType) => post.id !== postId),
 				}
 			})
-			console.log('prev', previousPosts)
 
-			console.log(
-				'optimist',
-				queryClient.setQueriesData(queryKey, (old: any) => ({
-					...old,
-					pages: optimisticPosts,
-				}))
-			)
+			queryClient.setQueriesData(queryKey, (old: any) => ({
+				...old,
+				pages: optimisticPosts,
+			}))
 			return { previousPosts }
 		},
 		onSuccess: () => {
