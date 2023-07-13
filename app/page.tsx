@@ -1,4 +1,4 @@
-import { SignInButton } from '@/components/buttons'
+import { SignInButton } from '@/components/buttons/auth-buttons'
 import { Separator } from '@/components/ui/separator'
 import Feed from '@/components/feed'
 import { getSession } from '@/lib/session'

@@ -19,3 +19,8 @@ export interface PostType {
 		image: string | null
 	}
 }
+
+export interface PageType {
+	posts: PostType[]
+	nextCursor: string
+}

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from './ui/card'
 import Link from 'next/link'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { Session } from 'next-auth'
-import { DeletePostButton } from './buttons'
+import { DeletePostButton } from './buttons/delete-post-button'
 import Linkify from 'linkify-react'
 
 export const revalidate = 216000
