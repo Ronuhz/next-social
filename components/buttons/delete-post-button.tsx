@@ -1,11 +1,23 @@
 'use client'
 
-import { Button } from '../ui/button'
+import { Button, buttonVariants } from '../ui/button'
 import { Loader2, Trash2 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { deletePost } from '@/lib/actions'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PostType } from '@/types'
+import {
+	AlertDialog,
+	AlertDialogHeader,
+	AlertDialogTrigger,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogTitle,
+	AlertDialogFooter,
+	AlertDialogCancel,
+} from '../ui/alert-dialog'
+import { AlertDialogAction } from '@radix-ui/react-alert-dialog'
+import { cn } from '@/lib/utils'
 
 interface Props {
 	postId: string
@@ -59,19 +71,40 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 	})
 
 	return (
-		<Button
-			variant='ghost'
-			size='icon'
-			aria-label='Delete Post'
-			disabled={isLoading}
-			className='mb-auto hover:text-red-600'
-			onClick={() => mutateAsync(postId)}
-		>
-			{!isLoading ? (
-				<Trash2 size={18} />
-			) : (
-				<Loader2 className='h-5 w-5 animate-spin' />
-			)}
-		</Button>
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button
+					variant='ghost'
+					size='icon'
+					aria-label='Delete Post'
+					disabled={isLoading}
+					className='mb-auto hover:text-red-600'
+				>
+					{!isLoading ? (
+						<Trash2 size={18} />
+					) : (
+						<Loader2 className='h-5 w-5 animate-spin' />
+					)}
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Delete Post?</AlertDialogTitle>
+					<AlertDialogDescription>
+						This can’t be undone and it will be removed from your profile and
+						from the feed.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogAction
+						className={cn(buttonVariants({ variant: 'destructive' }))}
+						onClick={() => mutateAsync(postId)}
+					>
+						Delete
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }
