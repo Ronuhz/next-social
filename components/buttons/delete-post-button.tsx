@@ -15,8 +15,8 @@ import {
 	AlertDialogTitle,
 	AlertDialogFooter,
 	AlertDialogCancel,
+	AlertDialogAction,
 } from '../ui/alert-dialog'
-import { AlertDialogAction } from '@radix-ui/react-alert-dialog'
 import { cn } from '@/lib/utils'
 
 interface Props {
