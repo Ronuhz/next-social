@@ -74,7 +74,7 @@ export const NewPostButton = () => {
 									})
 									.finally(() => {
 										queryClient.invalidateQueries({
-											queryKey: ['posts'],
+											queryKey: ['oldPosts'],
 										})
 										setIsLoading(false)
 									})

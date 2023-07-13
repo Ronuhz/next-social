@@ -9,6 +9,7 @@ import { PostType } from '@/types'
 
 interface Props {
 	postId: string
+	queryKey: string[]
 }
 
 /**
@@ -18,15 +19,15 @@ interface Props {
  * TODO: posts-${userId}
  * */
 
-export const DeletePostButton = ({ postId }: Props) => {
+export const DeletePostButton = ({ postId, queryKey }: Props) => {
 	const queryClient = useQueryClient()
 	const { toast } = useToast()
 
 	const { mutateAsync, isLoading } = useMutation({
 		mutationFn: (postId: string) => deletePost(postId),
 		onMutate: async (postId) => {
-			await queryClient.cancelQueries({ queryKey: ['posts'] })
-			const previousPosts: any = queryClient.getQueryData(['posts'])
+			await queryClient.cancelQueries({ queryKey: queryKey })
+			const previousPosts: any = queryClient.getQueryData(queryKey)
 
 			const optimisticPosts = previousPosts.pages.map((page: any) => {
 				return {
@@ -38,7 +39,7 @@ export const DeletePostButton = ({ postId }: Props) => {
 
 			console.log(
 				'optimist',
-				queryClient.setQueriesData(['posts'], (old: any) => ({
+				queryClient.setQueriesData(queryKey, (old: any) => ({
 					...old,
 					pages: optimisticPosts,
 				}))

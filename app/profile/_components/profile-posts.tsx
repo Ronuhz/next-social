@@ -16,7 +16,12 @@ const fetchPosts = async ({ pageParam = 1 }, userId: string) => {
 
 const returnPosts = (page: PageType, session: Session | null) => {
 	return page.posts.map((post) => (
-		<Post key={post.id} post={post} session={session} />
+		<Post
+			key={post.id}
+			post={post}
+			session={session}
+			queryKey={[`oldPosts`, `profile-${post.userId}`]}
+		/>
 	))
 }
 
@@ -29,7 +34,7 @@ const ProfilePosts = ({
 }) => {
 	return (
 		<InfiniteScroll
-			queryKeys={['posts', `profile-${userId}`]}
+			queryKeys={['oldPosts', `profile-${userId}`]}
 			fetchFunction={({ pageParam }) => fetchPosts({ pageParam }, userId)}
 			returnFunction={(page: PageType) => returnPosts(page, session)}
 			loadingSkeleton={

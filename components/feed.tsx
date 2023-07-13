@@ -10,21 +10,26 @@ import { PageType } from '@/types'
  * @param pageParam The current page number
  */
 const fetchPosts = async ({ pageParam = 1 }) => {
-	const res = await fetch(`/api/posts?perPage=2&cursor=${pageParam}`)
+	const res = await fetch(`/api/posts?perPage=20&cursor=${pageParam}`)
 	const data: PageType = await res.json()
 	return data
 }
 
 const returnPosts = (page: PageType, session: Session) => {
 	return page.posts.map((post) => (
-		<Post key={post.id} post={post} session={session} />
+		<Post
+			key={post.id}
+			post={post}
+			session={session}
+			queryKey={['oldPosts', 'posts']}
+		/>
 	))
 }
 
 const Feed = ({ session }: { session: Session }) => {
 	return (
 		<InfiniteScroll
-			queryKeys={['posts']}
+			queryKeys={['oldPosts', 'posts']}
 			fetchFunction={fetchPosts}
 			returnFunction={(page: PageType) => returnPosts(page, session)}
 			loadingSkeleton={

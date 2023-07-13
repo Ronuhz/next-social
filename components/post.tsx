@@ -20,9 +20,18 @@ interface Props {
 		}
 	}
 	session: Session | null
+	queryKey: string[]
 }
 
-const Post = ({ post, session }: Props) => {
+/**
+ *
+ * @param queryKey will be ['oldPosts', `posts OR profile-${userId}`]
+ * *oldPosts is used to revalidate the feed and profile posts if a new post is created
+ * *posts is used to revalidate posts on the feed if one gets deleted
+ * *profile-${userId} is used to revalidate posts on the profile if one gets deleted
+ */
+
+const Post = ({ post, session, queryKey }: Props) => {
 	return (
 		<Card className='w-[22rem] sm:w-[32rem]'>
 			<CardHeader>
@@ -46,7 +55,7 @@ const Post = ({ post, session }: Props) => {
 						</div>
 					</Link>
 					{session && post?.userId === session?.user?.id && (
-						<DeletePostButton postId={post?.id} />
+						<DeletePostButton postId={post?.id} queryKey={queryKey} />
 					)}
 				</div>
 			</CardHeader>
