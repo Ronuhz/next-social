@@ -5,6 +5,7 @@ import React from 'react'
 import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
 import { queryClient } from '@/lib/query'
+import { Card, CardContent, CardDescription, CardHeader } from './ui/card'
 
 interface Props {
 	queryKeys: string[]
@@ -36,7 +37,12 @@ const InfiniteScroll = ({
 	return status === 'loading' ? (
 		<>{loadingSkeleton ? loadingSkeleton : <p>loading</p>}</>
 	) : status === 'error' ? (
-		<p>Oh, no! Something went wrong!</p>
+		<Card>
+			<CardHeader>Oh, no! Something went wrong!</CardHeader>
+			<CardContent className='-mt-6'>
+				<CardDescription>Or you're not logged in</CardDescription>
+			</CardContent>
+		</Card>
 	) : (
 		<>
 			{data.pages.map((page, i) => (
