@@ -14,7 +14,7 @@ import { Button } from './ui/button'
 import { NewPostButton } from './buttons/new-post-button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
-import { User, LogOut } from 'lucide-react'
+import { User } from 'lucide-react'
 
 interface ProfileDropdownProps {
 	currentUser: {
@@ -71,9 +71,9 @@ const ProfileDropdown = ({ currentUser }: ProfileDropdownProps) => {
 						</DropdownMenuItem>
 					</Link>
 				</DropdownMenuGroup>
+				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
-						<LogOut className='mr-2 h-4 w-4' />
 						<SignOutDropdownItem />
 					</DropdownMenuItem>
 				</DropdownMenuGroup>

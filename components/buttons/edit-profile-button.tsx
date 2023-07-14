@@ -80,6 +80,16 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 						}}
 					/>
 				</div>
+				{/* 
+				
+				Custom profile pic upload needs to be implemented.
+				Files compress in browser with: https://www.npmjs.com/package/browser-image-compression
+				and uploaded to Uploadthing
+
+				<div className='space-y-1'>
+					<Label htmlFor='profilePicture'>Profile Picture</Label>
+					<Input type='file' id='profilePicture' disabled={isLoading} />
+				</div> */}
 
 				<DialogFooter>
 					{!isLoading ? (

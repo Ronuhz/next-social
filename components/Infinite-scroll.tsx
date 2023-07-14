@@ -4,7 +4,6 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import React from 'react'
 import { Button } from './ui/button'
 import { Loader2 } from 'lucide-react'
-import { queryClient } from '@/lib/query'
 import { Card, CardContent, CardDescription, CardHeader } from './ui/card'
 
 interface Props {
@@ -31,6 +30,7 @@ const InfiniteScroll = ({
 	} = useInfiniteQuery({
 		queryKey: queryKeys,
 		queryFn: fetchFunction,
+		refetchOnWindowFocus: false,
 		getNextPageParam: (lastPage) => lastPage.nextCursor,
 	})
 

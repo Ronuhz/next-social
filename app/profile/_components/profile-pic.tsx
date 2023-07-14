@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton'
 import {
 	Avatar,
 	AvatarFallback,
@@ -34,9 +35,11 @@ const ProfilePic = ({
 	return (
 		<Avatar className={className} {...rest}>
 			<AvatarImage alt='Profile' src={image ?? ''} />
-			<AvatarFallback className={`${fallbackTextSize}`}>{`${
-				name?.split(' ')[0][0]
-			}${name?.split(' ')[1][0]}`}</AvatarFallback>
+			<AvatarFallback className={`${fallbackTextSize}`}>
+				<Skeleton className='inline-flex h-full w-full items-center justify-center rounded-full'>{`${
+					name?.split(' ')[0][0]
+				}${name?.split(' ')[1][0]}`}</Skeleton>
+			</AvatarFallback>
 		</Avatar>
 	)
 }

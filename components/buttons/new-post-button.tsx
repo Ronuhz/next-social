@@ -40,13 +40,16 @@ export const NewPostButton = () => {
 			>
 				<DialogHeader>
 					<DialogTitle>New post</DialogTitle>
-					<DialogDescription>Create a new post.</DialogDescription>
+					<DialogDescription className='balance'>
+						Create a new post. Will be visible to everyone on the feed and on
+						your profile.
+					</DialogDescription>
 				</DialogHeader>
 				<div className='space-y-1'>
 					<Label htmlFor='content'>Content</Label>
 					<Textarea
 						id='content'
-						placeholder='Write here what you want to tell to the world'
+						placeholder='Here goes your latest story'
 						disabled={isLoading}
 						rows={6}
 						minLength={1}

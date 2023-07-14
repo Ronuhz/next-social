@@ -39,7 +39,7 @@ const Profile = async ({ user }: UserType) => {
 					</p>
 					<p className='balance text-xs sm:text-base'>{user?.bio ?? ''}</p>
 					{user?.location && (
-						<p className='balance inline-flex items-center gap-1 text-xs text-muted-foreground sm:text-base'>
+						<p className='balance inline-flex items-baseline gap-1 text-xs text-muted-foreground sm:text-base'>
 							<MapPin size={16} />
 							{user?.location ?? ''}
 						</p>
