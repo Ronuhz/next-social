@@ -15,15 +15,32 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { createNewPost } from '@/lib/actions'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const NewPostButton = () => {
+	const queryClient = useQueryClient()
 	const [content, setContent] = useState('')
 	const [isOpen, setIsOpen] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
 
 	const { toast } = useToast()
-	const queryClient = useQueryClient()
+
+	const { mutate, isLoading } = useMutation({
+		mutationFn: (content: string) => createNewPost(content),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['oldPosts'],
+			})
+			setIsOpen(false)
+			setContent('')
+			toast({ description: 'Post created' })
+		},
+		onError: () =>
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Something went wrong.',
+				description: 'There was a problem with your request.',
+			}),
+	})
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -64,40 +81,19 @@ export const NewPostButton = () => {
 					)}
 				</div>
 				<DialogFooter>
-					{!isLoading ? (
-						<Button
-							disabled={content.length < 1}
-							onClick={() => {
-								setIsLoading(true)
-								createNewPost(content)
-									.then(() => {
-										setIsOpen(false)
-										setContent('')
-										toast({ description: 'Post created' })
-									})
-									.finally(() => {
-										queryClient.invalidateQueries({
-											queryKey: ['oldPosts'],
-										})
-										setIsLoading(false)
-									})
-									.catch(() =>
-										toast({
-											variant: 'destructive',
-											title: 'Uh oh! Something went wrong.',
-											description: 'There was a problem with your request.',
-										})
-									)
-							}}
-						>
-							Post
-						</Button>
-					) : (
-						<Button disabled>
-							<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-							Posting
-						</Button>
-					)}
+					<Button
+						disabled={content.length < 1 || isLoading}
+						onClick={() => mutate(content)}
+					>
+						{!isLoading ? (
+							'Post'
+						) : (
+							<>
+								<Loader2 className='mr-2 h-5 w-5 animate-spin' />
+								Posting
+							</>
+						)}
+					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

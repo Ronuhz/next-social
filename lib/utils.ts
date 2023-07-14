@@ -17,7 +17,9 @@ export function getTimeAgo(createdDate: Date) {
 	const years = Math.floor(months / 12)
 
 	if (years > 0) {
-		return `${years} y`
+		const options = { year: 'numeric', month: 'short', day: 'numeric' } as const
+		const formattedDate = createdDate.toLocaleString('en-US', options)
+		return `${formattedDate}`
 	} else if (months > 0) {
 		return `${months} m`
 	} else if (days > 0) {
@@ -27,6 +29,6 @@ export function getTimeAgo(createdDate: Date) {
 	} else if (minutes > 0) {
 		return `${minutes} min`
 	} else {
-		return `${seconds} s`
+		return `Now`
 	}
 }

@@ -1,4 +1,5 @@
 'use client'
+
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import { Edit3, Loader2 } from 'lucide-react'
@@ -16,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { saveAccountInfo } from '@/lib/actions'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface EditProfileProps {
 	bio: string
@@ -28,9 +30,23 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 		location,
 	})
 	const [isOpen, setIsOpen] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
-
 	const { toast } = useToast()
+
+	const { mutate, isLoading } = useMutation({
+		mutationFn: (accountInfo: EditProfileProps) => saveAccountInfo(accountInfo),
+		onSuccess: () => {
+			setIsOpen(false)
+			toast({
+				description: 'Account updated',
+			})
+		},
+		onError: () =>
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Something went wrong.',
+				description: 'There was a problem with your request.',
+			}),
+	})
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -93,27 +109,7 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 
 				<DialogFooter>
 					{!isLoading ? (
-						<Button
-							type='submit'
-							onClick={() => {
-								setIsLoading(true)
-								saveAccountInfo(accountInfo)
-									.then(() => setIsOpen(false))
-									.then(() =>
-										toast({
-											description: 'Account updated',
-										})
-									)
-									.finally(() => setIsLoading(false))
-									.catch(() =>
-										toast({
-											variant: 'destructive',
-											title: 'Uh oh! Something went wrong.',
-											description: 'There was a problem with your request.',
-										})
-									)
-							}}
-						>
+						<Button type='submit' onClick={() => mutate(accountInfo)}>
 							Save
 						</Button>
 					) : (
