@@ -17,7 +17,18 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { saveAccountInfo } from '@/lib/actions'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+import * as z from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '../ui/form'
 
 interface EditProfileProps {
 	bio: string
@@ -25,15 +36,25 @@ interface EditProfileProps {
 }
 
 export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
-	const [accountInfo, setAccountInfo] = useState({
-		bio,
-		location,
-	})
 	const [isOpen, setIsOpen] = useState(false)
 	const { toast } = useToast()
 
+	const editFormSchema = z.object({
+		bio: z.string().max(100),
+		location: z.string().max(30),
+	})
+
+	const form = useForm<z.infer<typeof editFormSchema>>({
+		resolver: zodResolver(editFormSchema),
+		defaultValues: {
+			bio,
+			location,
+		},
+	})
+
 	const { mutate, isLoading } = useMutation({
-		mutationFn: (accountInfo: EditProfileProps) => saveAccountInfo(accountInfo),
+		mutationFn: (values: z.infer<typeof editFormSchema>) =>
+			saveAccountInfo(values),
 		onSuccess: () => {
 			setIsOpen(false)
 			toast({
@@ -63,62 +84,67 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 			>
 				<DialogHeader>
 					<DialogTitle>Edit profile</DialogTitle>
-					<DialogDescription>
+					<DialogDescription className='balance'>
 						{"Make changes to your profile here. Click save when you're done."}
 					</DialogDescription>
 				</DialogHeader>
-				<div className='space-y-1'>
-					<Label htmlFor='bio'>Bio</Label>
-					<Textarea
-						id='bio'
-						placeholder='Tell us a little bit about yourself'
-						defaultValue={bio}
-						disabled={isLoading}
-						rows={3}
-						maxLength={100}
-						className='resize-none'
-						onChange={(e) => {
-							setAccountInfo((prev) => ({ ...prev, bio: e.target.value }))
-						}}
-					/>
-				</div>
-				<div className='space-y-1'>
-					<Label htmlFor='location'>Location</Label>
-					<Input
-						type='text'
-						id='location'
-						placeholder='ex. New York'
-						defaultValue={location}
-						disabled={isLoading}
-						maxLength={30}
-						onChange={(e) => {
-							setAccountInfo((prev) => ({ ...prev, location: e.target.value }))
-						}}
-					/>
-				</div>
-				{/* 
-				
-				Custom profile pic upload needs to be implemented.
-				Files compress in browser with: https://www.npmjs.com/package/browser-image-compression
-				and uploaded to Uploadthing
 
-				<div className='space-y-1'>
-					<Label htmlFor='profilePicture'>Profile Picture</Label>
-					<Input type='file' id='profilePicture' disabled={isLoading} />
-				</div> */}
-
-				<DialogFooter>
-					{!isLoading ? (
-						<Button type='submit' onClick={() => mutate(accountInfo)}>
-							Save
-						</Button>
-					) : (
-						<Button disabled>
-							<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-							Saving
-						</Button>
-					)}
-				</DialogFooter>
+				{/* FORM */}
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit((values) => mutate(values))}
+						className='space-y-8'
+					>
+						<FormField
+							control={form.control}
+							name='bio'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Bio</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder='Tell us a little bit about yourself'
+											disabled={isLoading}
+											rows={3}
+											className='resize-y'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name='location'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Location</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='ex. New York'
+											disabled={isLoading}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<DialogFooter>
+							<Button type='submit' disabled={isLoading}>
+								{!isLoading ? (
+									'Save'
+								) : (
+									<>
+										<Loader2 className='mr-2 h-5 w-5 animate-spin' />
+										Saving
+									</>
+								)}
+							</Button>
+						</DialogFooter>
+					</form>
+				</Form>
 			</DialogContent>
 		</Dialog>
 	)

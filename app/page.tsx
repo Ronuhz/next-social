@@ -25,7 +25,7 @@ export default async function Home() {
 
 	return (
 		<section className='flex flex-col items-center justify-center '>
-			<div className='w-[22rem] gap-4 space-y-4 sm:w-[32rem]'>
+			<div className='w-[95vw] gap-4 space-y-4 sm:w-[32rem]'>
 				<h1 className='mr-auto pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
 				<Feed session={session} />
 			</div>

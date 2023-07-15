@@ -20,7 +20,7 @@ const Profile = async ({ user }: UserType) => {
 			<h1 className='mr-auto p-3 text-xl font-semibold uppercase sm:text-2xl'>
 				{isItMyProfile ? 'My Profile' : `${user.name}'s profile`}
 			</h1>
-			<div className='flex w-[22rem] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
+			<div className='flex w-[95vw] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
 				<ProfilePic
 					className='h-[92px] w-[92px]'
 					fallbackTextSize='text-3xl'

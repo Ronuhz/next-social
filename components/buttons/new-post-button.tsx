@@ -11,27 +11,49 @@ import {
 	DialogTitle,
 	DialogFooter,
 } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { createNewPost } from '@/lib/actions'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '../ui/form'
 
 export const NewPostButton = () => {
-	const queryClient = useQueryClient()
-	const [content, setContent] = useState('')
 	const [isOpen, setIsOpen] = useState(false)
-
+	const queryClient = useQueryClient()
 	const { toast } = useToast()
 
+	const newPostFormSchema = z.object({
+		content: z.string().min(1).max(600),
+	})
+
+	const form = useForm<z.infer<typeof newPostFormSchema>>({
+		resolver: zodResolver(newPostFormSchema),
+		defaultValues: {
+			content: '',
+		},
+	})
+
 	const { mutate, isLoading } = useMutation({
-		mutationFn: (content: string) => createNewPost(content),
+		mutationFn: (values: z.infer<typeof newPostFormSchema>) =>
+			createNewPost(values.content),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ['oldPosts'],
 			})
 			setIsOpen(false)
-			setContent('')
+
+			// clears the forms input
+			form.reset({ content: '' })
 			toast({ description: 'Post created' })
 		},
 		onError: () =>
@@ -62,39 +84,46 @@ export const NewPostButton = () => {
 						your profile.
 					</DialogDescription>
 				</DialogHeader>
-				<div className='space-y-1'>
-					<Label htmlFor='content'>Content</Label>
-					<Textarea
-						id='content'
-						placeholder='Here goes your latest story'
-						disabled={isLoading}
-						rows={6}
-						minLength={1}
-						maxLength={600}
-						className='resize-y'
-						onChange={(e) => setContent(e.target.value)}
-					/>
-					{content.length < 1 && (
-						<p className='text-sm text-red-700'>
-							Content must be at least 1 character long
-						</p>
-					)}
-				</div>
-				<DialogFooter>
-					<Button
-						disabled={content.length < 1 || isLoading}
-						onClick={() => mutate(content)}
+
+				{/* FORM */}
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit((values) => mutate(values))}
+						className='space-y-8'
 					>
-						{!isLoading ? (
-							'Post'
-						) : (
-							<>
-								<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-								Posting
-							</>
-						)}
-					</Button>
-				</DialogFooter>
+						<FormField
+							control={form.control}
+							name='content'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Content</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder='Here goes your latest story...'
+											disabled={isLoading}
+											rows={6}
+											className='resize-y'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<DialogFooter>
+							<Button type='submit' disabled={isLoading}>
+								{!isLoading ? (
+									'Post'
+								) : (
+									<>
+										<Loader2 className='mr-2 h-5 w-5 animate-spin' />
+										Posting
+									</>
+								)}
+							</Button>
+						</DialogFooter>
+					</form>
+				</Form>
 			</DialogContent>
 		</Dialog>
 	)
