@@ -80,7 +80,7 @@ export const NewPostButton = () => {
 				<DialogHeader>
 					<DialogTitle>New post</DialogTitle>
 					<DialogDescription className='balance'>
-						Create a new post. Will be visible to everyone on the feed and on
+						Create a new post. It will be visible to everyone on the feed and on
 						your profile.
 					</DialogDescription>
 				</DialogHeader>

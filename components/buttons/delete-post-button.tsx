@@ -24,13 +24,6 @@ interface Props {
 	queryKey: string[]
 }
 
-/**
- * TODO: feed and profile queries conflict
- * TODO: maybe from profile-posts pass down the user id
- * TODO: and if !userId then user posts as key otherwise
- * TODO: posts-${userId}
- * */
-
 export const DeletePostButton = ({ postId, queryKey }: Props) => {
 	const queryClient = useQueryClient()
 	const { toast } = useToast()
@@ -91,8 +84,8 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 				<AlertDialogHeader>
 					<AlertDialogTitle>Delete Post?</AlertDialogTitle>
 					<AlertDialogDescription>
-						This can’t be undone and it will be removed from your profile and
-						from the feed.
+						This can’t be undone and it will be removed from the feed and your
+						profile.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

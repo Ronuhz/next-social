@@ -28,7 +28,7 @@ interface Props {
  * *profile-${userId} is used to revalidate posts on the profile if one gets deleted
  */
 
-const Post = async ({ post, session, queryKey }: Props) => {
+const Post = ({ post, session, queryKey }: Props) => {
 	const isLikedByCurrentUser = post.likes.some(
 		(like) =>
 			like.postId === post.id && like.userId === (session?.user?.id ?? '')
