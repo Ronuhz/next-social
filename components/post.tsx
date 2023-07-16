@@ -1,24 +1,21 @@
+'use client'
+
 import { getTimeAgo } from '@/lib/utils'
-import { Card, CardContent, CardHeader } from './ui/card'
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 import Link from 'next/link'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { Session } from 'next-auth'
 import { DeletePostButton } from './buttons/delete-post-button'
 import Linkify from 'linkify-react'
+import LikeButton from './buttons/like-button'
+import { PostType } from '@/types'
+import { Heart } from 'lucide-react'
+import { useState } from 'react'
 
 export const revalidate = 216000
 
 interface Props {
-	post: {
-		id: string
-		content: string | null
-		createdAt: string | Date
-		userId: string
-		user: {
-			name: string | null
-			image: string | null
-		}
-	}
+	post: PostType
 	session: Session | null
 	queryKey: string[]
 }
@@ -31,7 +28,11 @@ interface Props {
  * *profile-${userId} is used to revalidate posts on the profile if one gets deleted
  */
 
-const Post = ({ post, session, queryKey }: Props) => {
+const Post = async ({ post, session, queryKey }: Props) => {
+	const isLikedByCurrentUser = post.likes.some(
+		(like) =>
+			like.postId === post.id && like.userId === (session?.user?.id ?? '')
+	)
 	return (
 		<Card className='w-[95vw] sm:w-[32rem]'>
 			<CardHeader>
@@ -70,6 +71,21 @@ const Post = ({ post, session, queryKey }: Props) => {
 					{post?.content}
 				</Linkify>
 			</CardContent>
+			<CardFooter>
+				{session ? (
+					<LikeButton
+						isLikedByCurrentUser={isLikedByCurrentUser}
+						postId={post.id}
+						userId={session?.user?.id}
+						likeCount={post.likes.length}
+					/>
+				) : (
+					<>
+						<Heart height={20} width={20} />
+						<span>{post.likes.length}</span>
+					</>
+				)}
+			</CardFooter>
 		</Card>
 	)
 }

@@ -25,7 +25,10 @@ export async function GET(req: NextRequest) {
 		take: perPage,
 		skip: parseInt(cursor!) === 1 ? 0 : 1,
 		cursor: parseInt(cursor!) === 1 ? undefined : { id: cursor },
-		include: { user: { select: { name: true, image: true } } },
+		include: {
+			user: { select: { name: true, image: true } },
+			likes: { select: { userId: true, postId: true } },
+		},
 		where: userId ? { userId } : undefined,
 		orderBy: { createdAt: 'desc' },
 	})
