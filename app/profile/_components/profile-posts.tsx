@@ -1,30 +1,27 @@
 'use client'
 
-import Post from '@/components/post'
 import { Session } from 'next-auth'
-import { PostType } from '@/types'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '@/lib/query'
+import { PageType } from '@/types'
 import InfiniteScroll from '@/components/Infinite-scroll'
+import Post from '@/components/post'
 import PostSkeleton from '@/components/skeletons'
-
-interface Props {
-	posts: PostType[]
-	nextCursor: string
-}
 
 const fetchPosts = async ({ pageParam = 1 }, userId: string) => {
 	const res = await fetch(
 		`/api/posts?perPage=20&cursor=${pageParam}&userId=${userId}`
 	)
-	const data: Props = await res.json()
-	console.log(data)
+	const data: PageType = await res.json()
 	return data
 }
 
-const returnPosts = (page: Props, session: Session | null) => {
+const returnPosts = (page: PageType, session: Session | null) => {
 	return page.posts.map((post) => (
-		<Post key={post.id} post={post} session={session} />
+		<Post
+			key={post.id}
+			post={post}
+			session={session}
+			queryKey={[`oldPosts`, `profile-${post.userId}`]}
+		/>
 	))
 }
 
@@ -36,21 +33,19 @@ const ProfilePosts = ({
 	session: Session | null
 }) => {
 	return (
-		<QueryClientProvider client={queryClient}>
-			<InfiniteScroll
-				queryKeys={['posts', `profile-${userId}`]}
-				fetchFunction={({ pageParam }) => fetchPosts({ pageParam }, userId)}
-				returnFunction={(page: Props) => returnPosts(page, session)}
-				loadingSkeleton={
-					<>
-						<PostSkeleton />
-						<PostSkeleton />
-						<PostSkeleton />
-						<PostSkeleton />
-					</>
-				}
-			/>
-		</QueryClientProvider>
+		<InfiniteScroll
+			queryKeys={['oldPosts', `profile-${userId}`]}
+			fetchFunction={({ pageParam }) => fetchPosts({ pageParam }, userId)}
+			returnFunction={(page: PageType) => returnPosts(page, session)}
+			loadingSkeleton={
+				<>
+					<PostSkeleton />
+					<PostSkeleton />
+					<PostSkeleton />
+					<PostSkeleton />
+				</>
+			}
+		/>
 	)
 }
 

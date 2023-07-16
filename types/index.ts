@@ -18,4 +18,10 @@ export interface PostType {
 		name: string | null
 		image: string | null
 	}
+	likes: { userId: string; postId: string }[]
+}
+
+export interface PageType {
+	posts: PostType[]
+	nextCursor: string
 }

@@ -52,6 +52,7 @@ model User {
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
+  likes         Like[]
 
   @@index([email, id])
 }
@@ -62,8 +63,20 @@ model Post {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  likes     Like[]
 
   @@index([userId])
+}
+
+model Like {
+  id     String  @id @default(cuid())
+  postId String?
+  userId String?
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@index([userId, postId])
 }
 
 model VerificationToken {

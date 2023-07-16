@@ -1,17 +1,18 @@
 import { prisma } from '@/lib/prisma'
-import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
+// import { getToken } from 'next-auth/jwt'
 
 export async function GET(req: NextRequest) {
-	const token = await getToken({ req })
+	// const token = await getToken({ req })
 	const { searchParams } = new URL(req.url)
 
 	const userId = searchParams.get('userId')
 
+	// *Uses not middleware and protects both
 	// if user is not logged in && not requesting posts for a specific user
-	if (!token && !userId) {
-		return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
-	}
+	// if (!token && !userId) {
+	// 	return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+	// }
 
 	//otherwise
 
@@ -24,7 +25,10 @@ export async function GET(req: NextRequest) {
 		take: perPage,
 		skip: parseInt(cursor!) === 1 ? 0 : 1,
 		cursor: parseInt(cursor!) === 1 ? undefined : { id: cursor },
-		include: { user: { select: { name: true, image: true } } },
+		include: {
+			user: { select: { name: true, image: true } },
+			likes: { select: { userId: true, postId: true } },
+		},
 		where: userId ? { userId } : undefined,
 		orderBy: { createdAt: 'desc' },
 	})

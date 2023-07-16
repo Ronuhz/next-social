@@ -1,4 +1,4 @@
-import { SignOutDropdownItem } from './buttons'
+import { SignOutDropdownItem } from './buttons/auth-buttons'
 import Link from 'next/link'
 import { Separator } from './ui/separator'
 import {
@@ -11,9 +11,10 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
-import { NewPostButton } from './buttons'
+import { NewPostButton } from './buttons/new-post-button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
+import { User } from 'lucide-react'
 
 interface ProfileDropdownProps {
 	currentUser: {
@@ -59,16 +60,18 @@ const ProfileDropdown = ({ currentUser }: ProfileDropdownProps) => {
 					/>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className='mr-2 w-40'>
+			<DropdownMenuContent className='mr-2 w-56'>
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<Link href='/profile'>
 						<DropdownMenuItem className='cursor-pointer'>
-							Profile
+							<User className='mr-2 h-4 w-4' />
+							<span>Profile</span>
 						</DropdownMenuItem>
 					</Link>
 				</DropdownMenuGroup>
+				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
 						<SignOutDropdownItem />
