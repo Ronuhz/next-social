@@ -12,8 +12,23 @@ declare module 'next-auth' {
 	}
 }
 
+const prismaAdapter = PrismaAdapter(prisma)
+
+// *overrides the user creation process provided by the prisma adapter
+// *to include a username for the user based on the email
+// *ex. from "john@example.com" username will be "john"
+// @ts-ignore
+prismaAdapter.createUser = (data) => {
+	const atIndex = data.email.indexOf('@')
+	const username = data.email.substring(0, atIndex).toLowerCase()
+
+	return prisma.user.create({
+		data: { ...data, username },
+	})
+}
+
 export const authOptions: NextAuthOptions = {
-	adapter: PrismaAdapter(prisma),
+	adapter: prismaAdapter,
 	secret: process.env.NEXTAUTH_SECRET,
 	session: {
 		strategy: 'jwt',
