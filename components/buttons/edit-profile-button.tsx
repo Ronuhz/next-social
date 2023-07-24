@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Form,
 	FormControl,
+	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -30,15 +31,30 @@ import {
 } from '../ui/form'
 
 interface EditProfileProps {
+	username: string
 	bio: string
 	location: string
 }
 
-export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
+export const EditProfileButton = ({
+	bio,
+	location,
+	username,
+}: EditProfileProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { toast } = useToast()
 
 	const editFormSchema = z.object({
+		username: z
+			.string()
+			.min(1, { message: 'Username must be at least 1 character long.' })
+			.max(20, { message: 'Username must be shorter then 20 characters.' })
+			.refine((val) => !/\s/.test(val), {
+				message: 'Username must not contain spaces',
+			})
+			.refine((val) => /^[a-z]+$/.test(val), {
+				message: 'Username must be all lowercase letters',
+			}),
 		bio: z.string().max(100),
 		location: z.string().max(30),
 	})
@@ -46,6 +62,7 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 	const form = useForm<z.infer<typeof editFormSchema>>({
 		resolver: zodResolver(editFormSchema),
 		defaultValues: {
+			username,
 			bio,
 			location,
 		},
@@ -92,8 +109,26 @@ export const EditProfileButton = ({ bio, location }: EditProfileProps) => {
 				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit((values) => mutate(values))}
-						className='space-y-8'
+						className='space-y-4'
 					>
+						<FormField
+							control={form.control}
+							name='username'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Username</FormLabel>
+									<FormControl>
+										<Input
+											placeholder='username'
+											disabled={isLoading}
+											{...field}
+										/>
+									</FormControl>
+									<FormDescription>Your unique identifier</FormDescription>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 						<FormField
 							control={form.control}
 							name='bio'

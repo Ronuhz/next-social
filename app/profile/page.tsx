@@ -20,7 +20,7 @@ const ProfilePage = async () => {
 		where: { email: session?.user?.email! },
 		select: {
 			id: true,
-			name: true,
+			username: true,
 			bio: true,
 			location: true,
 			email: true,

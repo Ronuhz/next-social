@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 		skip: parseInt(cursor!) === 1 ? 0 : 1,
 		cursor: parseInt(cursor!) === 1 ? undefined : { id: cursor },
 		include: {
-			user: { select: { name: true, image: true } },
+			user: { select: { username: true, image: true } },
 			likes: { select: { userId: true, postId: true } },
 		},
 		where: userId ? { userId } : undefined,

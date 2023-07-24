@@ -66,11 +66,13 @@ export async function deletePost(postId: string): Promise<void> {
 }
 
 interface saveAccountInfoProps {
+	username: string
 	bio: string
 	location: string
 }
 
 export async function saveAccountInfo({
+	username,
 	bio,
 	location,
 }: saveAccountInfoProps): Promise<void> {
@@ -80,11 +82,12 @@ export async function saveAccountInfo({
 		try {
 			await prisma.user.update({
 				where: { id: session?.user?.id },
-				data: { bio, location },
+				data: { bio, location, username },
 			})
 			resolve()
 			revalidatePath('/')
 		} catch (error) {
+			console.log(error)
 			reject(error)
 		}
 	})

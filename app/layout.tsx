@@ -23,7 +23,7 @@ export default function RootLayout({
 		<AuthProvider>
 			<html
 				lang='en'
-				className='h-full w-full antialiased'
+				className='h-full w-full select-none antialiased'
 				suppressHydrationWarning
 			>
 				<QueryProvider>

@@ -8,7 +8,7 @@ import { Session } from 'next-auth'
 import { DeletePostButton } from './buttons/delete-post-button'
 import Linkify from 'linkify-react'
 import LikeButton from './buttons/like-button'
-import { PostType } from '@/types'
+import type { PostType } from '@/types'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
 
@@ -42,13 +42,13 @@ const Post = ({ post, session, queryKey }: Props) => {
 						className={`inline-flex items-center gap-4`}
 					>
 						<ProfilePic
-							name={post?.user.name}
+							username={post?.user.username}
 							image={post?.user.image}
 							className='h-10 w-10'
 						/>
 						<div>
-							<p className='font-semibold underline-offset-auto hover:underline'>
-								{post?.user.name}
+							<p className='font-semibold underline-offset-2 hover:underline'>
+								{post?.user.username}
 							</p>
 							<p className='text-sm text-muted-foreground '>
 								{getTimeAgo(new Date(post.createdAt))}

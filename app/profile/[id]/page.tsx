@@ -31,7 +31,7 @@ const ProfilePage = async ({ params }: Props) => {
 		where: { id: targetId },
 		select: {
 			id: true,
-			name: true,
+			username: true,
 			bio: true,
 			location: true,
 			email: true,

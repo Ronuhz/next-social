@@ -6,7 +6,7 @@ import {
 } from '../../../components/ui/avatar'
 
 interface Props {
-	name: string | null | undefined
+	username: string
 	image: string | null | undefined
 	className?: string
 	fallbackTextSize?:
@@ -26,19 +26,21 @@ interface Props {
 }
 
 const ProfilePic = ({
-	name,
+	username,
 	image,
 	className,
 	fallbackTextSize,
 	...rest
 }: Props) => {
+	const placeholder = username ? username.substring(0, 2) : ''
+
 	return (
 		<Avatar className={className} {...rest}>
 			<AvatarImage alt='Profile' src={image ?? ''} />
 			<AvatarFallback className={`${fallbackTextSize}`}>
-				<Skeleton className='inline-flex h-full w-full items-center justify-center rounded-full'>{`${
-					name?.split(' ')[0][0]
-				}${name?.split(' ')[1][0]}`}</Skeleton>
+				<Skeleton className='inline-flex h-full w-full items-center justify-center rounded-full'>
+					{placeholder}
+				</Skeleton>
 			</AvatarFallback>
 		</Avatar>
 	)

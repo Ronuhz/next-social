@@ -1,7 +1,7 @@
 export interface UserType {
 	user: {
 		id: string
-		name: string | null
+		username: string | null
 		email: string | null
 		image: string | null
 		bio: string | null
@@ -15,7 +15,7 @@ export interface PostType {
 	createdAt: Date
 	userId: string
 	user: {
-		name: string | null
+		username: string
 		image: string | null
 	}
 	likes: { userId: string; postId: string }[]

@@ -18,20 +18,21 @@ const Profile = async ({ user }: UserType) => {
 	return (
 		<div className='w-fit gap-4'>
 			<h1 className='mr-auto p-3 text-xl font-semibold uppercase sm:text-2xl'>
-				{isItMyProfile ? 'My Profile' : `${user.name}'s profile`}
+				{isItMyProfile ? 'My Profile' : `${user.username}'s profile`}
 			</h1>
 			<div className='flex w-[95vw] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
 				<ProfilePic
 					className='h-[92px] w-[92px]'
 					fallbackTextSize='text-3xl'
 					image={user?.image}
-					name={user?.name}
+					username={user?.username!}
 				/>
 				<div className='mb-auto flex flex-col overflow-hidden'>
 					<p className='inline-flex items-center gap-1 pb-0 font-semibold sm:pb-2 sm:text-xl'>
-						{user?.name}
+						{user?.username}
 						{user?.email === session?.user?.email && (
 							<EditProfileButton
+								username={user?.username!}
 								bio={user?.bio ?? ''}
 								location={user?.location ?? ''}
 							/>
