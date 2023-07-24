@@ -14,8 +14,9 @@ import { Button } from './ui/button'
 import { NewPostButton } from './buttons/new-post-button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
-import { User } from 'lucide-react'
+import { Users } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
+import type { Session } from '@prisma/client'
 
 interface ProfileDropdownProps {
 	user: {
@@ -27,24 +28,19 @@ interface ProfileDropdownProps {
 const MainNav = async () => {
 	const currentUser = await getCurrentUser()
 
-	const user = await prisma.user.findUnique({
-		where: { email: currentUser?.email! },
-		select: { username: true, image: true },
-	})
-
 	return (
 		<header className='sticky top-0 z-20'>
 			<nav className=' flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 				</Link>
-				{user && (
+				{currentUser && (
 					<ul className='inline-flex items-center gap-3'>
 						<li className='mb-1'>
 							<NewPostButton />
 						</li>
 						<li>
-							<ProfileDropdown user={user} />
+							<ProfileDropdown />
 						</li>
 					</ul>
 				)}
@@ -54,13 +50,20 @@ const MainNav = async () => {
 	)
 }
 
-const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
+const ProfileDropdown = async () => {
+	const currentUser = await getCurrentUser()
+
+	const user = await prisma.user.findUnique({
+		where: { email: currentUser?.email! },
+		select: { username: true, image: true },
+	})
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant='ghost' size='icon'>
 					<ProfilePic
-						username={user?.username}
+						username={user?.username ?? ''}
 						image={user?.image}
 						className='h-8 w-8'
 					/>
@@ -72,7 +75,7 @@ const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
 				<DropdownMenuGroup>
 					<Link href='/profile'>
 						<DropdownMenuItem className='cursor-pointer'>
-							<User className='mr-2 h-4 w-4' />
+							<Users className='mr-2 h-4 w-4' />
 							<span>Profile</span>
 						</DropdownMenuItem>
 					</Link>

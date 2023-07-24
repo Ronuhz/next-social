@@ -31,6 +31,7 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 	const { mutateAsync, isLoading } = useMutation({
 		mutationFn: (postId: string) => deletePost(postId),
 		onMutate: async (postId) => {
+			// Optimistic post deletion
 			await queryClient.cancelQueries({ queryKey: queryKey })
 			const previousPosts: any = queryClient.getQueryData(queryKey)
 

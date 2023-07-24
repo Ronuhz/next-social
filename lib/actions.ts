@@ -82,12 +82,11 @@ export async function saveAccountInfo({
 		try {
 			await prisma.user.update({
 				where: { id: session?.user?.id },
-				data: { bio, location, username },
+				data: { username, bio, location },
 			})
 			resolve()
 			revalidatePath('/')
 		} catch (error) {
-			console.log(error)
 			reject(error)
 		}
 	})
