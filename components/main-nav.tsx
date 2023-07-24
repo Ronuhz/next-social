@@ -15,30 +15,36 @@ import { NewPostButton } from './buttons/new-post-button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
+import { prisma } from '@/lib/prisma'
 
 interface ProfileDropdownProps {
-	currentUser: {
-		name?: string | null | undefined
-		email?: string | null | undefined
+	user: {
+		username: string
 		image?: string | null | undefined
 	}
 }
 
 const MainNav = async () => {
 	const currentUser = await getCurrentUser()
+
+	const user = await prisma.user.findUnique({
+		where: { email: currentUser?.email! },
+		select: { username: true, image: true },
+	})
+
 	return (
 		<header className='sticky top-0 z-20'>
 			<nav className=' flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 				</Link>
-				{currentUser && (
+				{user && (
 					<ul className='inline-flex items-center gap-3'>
 						<li className='mb-1'>
 							<NewPostButton />
 						</li>
 						<li>
-							<ProfileDropdown currentUser={currentUser} />
+							<ProfileDropdown user={user} />
 						</li>
 					</ul>
 				)}
@@ -48,14 +54,14 @@ const MainNav = async () => {
 	)
 }
 
-const ProfileDropdown = ({ currentUser }: ProfileDropdownProps) => {
+const ProfileDropdown = ({ user }: ProfileDropdownProps) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant='ghost' size='icon'>
 					<ProfilePic
-						name={currentUser?.name}
-						image={currentUser?.image}
+						username={user?.username}
+						image={user?.image}
 						className='h-8 w-8'
 					/>
 				</Button>
