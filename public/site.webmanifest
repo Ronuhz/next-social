@@ -4,6 +4,7 @@
 	"short_name": "NEXT",
 	"orientation": "portrait",
 	"background_color": "black",
+	"start_url": "/",
 	"icons": [
 		{
 			"src": "/assets/logo/manifest-icon-192.maskable.png",
