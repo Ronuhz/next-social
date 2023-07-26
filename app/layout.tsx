@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google'
 import MainNav from '@/components/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import QueryProvider from '@/components/providers/query-provider'
-import IOSSplashes from '@/public/assets/splashes/ios-splashes'
+import AppleSplashes from '@/public/assets/splash/apple-splashes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,8 +31,8 @@ export default function RootLayout({
 				suppressHydrationWarning
 			>
 				<head>
-					<IOSSplashes />
-					<link rel='manifest' href='/site.webmanifest' />
+					<AppleSplashes />
+					<link rel='manifest' href='/manifest.json' />
 				</head>
 				<QueryProvider>
 					<body className={`${inter.className}`}>
