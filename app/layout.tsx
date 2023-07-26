@@ -12,6 +12,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
 	title: 'NEXT Social',
 	description: 'A truly NEXT generation social platform.',
+	appleWebApp: { statusBarStyle: 'black-translucent' },
+	viewport: { initialScale: 1, viewportFit: 'cover', userScalable: false },
 }
 
 export default function RootLayout({
@@ -24,14 +26,10 @@ export default function RootLayout({
 			<html
 				lang='en'
 				className='h-full w-full select-none antialiased'
+				style={{ WebkitTapHighlightColor: 'transparent' }}
 				suppressHydrationWarning
 			>
 				<head>
-					<meta
-						name='apple-mobile-web-app-status-bar-style'
-						content='black-translucent'
-					/>
-					<meta name='viewport' content='initial-scale=1, viewport-fit=cover' />
 					<link rel='manifest' href='/site.webmanifest' />
 				</head>
 				<QueryProvider>
