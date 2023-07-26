@@ -26,6 +26,9 @@ export default function RootLayout({
 				className='h-full w-full select-none antialiased'
 				suppressHydrationWarning
 			>
+				<head>
+					<link rel='manifest' href='/site.webmanifest' />
+				</head>
 				<QueryProvider>
 					<body className={`${inter.className}`}>
 						<ThemeProvider attribute='class' defaultTheme='dark'>

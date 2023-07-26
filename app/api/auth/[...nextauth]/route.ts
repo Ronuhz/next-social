@@ -23,7 +23,7 @@ prismaAdapter.createUser = (data) => {
 	const username = data.email.substring(0, atIndex).toLowerCase()
 
 	return prisma.user.create({
-		data: { ...data, username },
+		data: { ...data, username, profilePicture: data.image ?? '' },
 	})
 }
 
@@ -71,6 +71,10 @@ export const authOptions: NextAuthOptions = {
 
 			return session
 		},
+	},
+	pages: {
+		signIn: '/',
+		signOut: '/',
 	},
 }
 

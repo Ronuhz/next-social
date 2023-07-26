@@ -35,7 +35,7 @@ const ProfilePage = async ({ params }: Props) => {
 			bio: true,
 			location: true,
 			email: true,
-			image: true,
+			profilePicture: true,
 		},
 	})
 

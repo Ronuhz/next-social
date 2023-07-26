@@ -24,7 +24,7 @@ const Profile = async ({ user }: UserType) => {
 				<ProfilePic
 					className='h-[92px] w-[92px]'
 					fallbackTextSize='text-3xl'
-					image={user?.image}
+					image={user?.profilePicture}
 					username={user?.username!}
 				/>
 				<div className='mb-auto flex flex-col overflow-hidden'>

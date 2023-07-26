@@ -14,7 +14,7 @@ import { Button } from './ui/button'
 import { NewPostButton } from './buttons/new-post-button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
-import { Users } from 'lucide-react'
+import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import type { Session } from '@prisma/client'
 
@@ -55,7 +55,7 @@ const ProfileDropdown = async () => {
 
 	const user = await prisma.user.findUnique({
 		where: { email: currentUser?.email! },
-		select: { username: true, image: true },
+		select: { username: true, profilePicture: true },
 	})
 
 	return (
@@ -64,7 +64,7 @@ const ProfileDropdown = async () => {
 				<Button variant='ghost' size='icon'>
 					<ProfilePic
 						username={user?.username ?? ''}
-						image={user?.image}
+						image={user?.profilePicture}
 						className='h-8 w-8'
 					/>
 				</Button>
@@ -73,12 +73,12 @@ const ProfileDropdown = async () => {
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<Link href='/profile'>
-						<DropdownMenuItem className='cursor-pointer'>
-							<Users className='mr-2 h-4 w-4' />
+					<DropdownMenuItem className='cursor-pointer' asChild>
+						<Link href='/profile'>
+							<User className='mr-2 h-4 w-4' />
 							<span>Profile</span>
-						</DropdownMenuItem>
-					</Link>
+						</Link>
+					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>

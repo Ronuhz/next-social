@@ -24,7 +24,7 @@ const ProfilePage = async () => {
 			bio: true,
 			location: true,
 			email: true,
-			image: true,
+			profilePicture: true,
 		},
 	})
 

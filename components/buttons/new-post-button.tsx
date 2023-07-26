@@ -33,7 +33,10 @@ export const NewPostButton = () => {
 	const { toast } = useToast()
 
 	const newPostFormSchema = z.object({
-		content: z.string().min(1).max(600),
+		content: z
+			.string()
+			.min(1, { message: 'Content must be at least 1 character long' })
+			.max(600, { message: 'Username must be shorter then 20 characters' }),
 	})
 
 	const form = useForm<z.infer<typeof newPostFormSchema>>({
@@ -112,14 +115,8 @@ export const NewPostButton = () => {
 						/>
 						<DialogFooter>
 							<Button type='submit' disabled={isLoading}>
-								{!isLoading ? (
-									'Post'
-								) : (
-									<>
-										<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-										Posting
-									</>
-								)}
+								{isLoading && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
+								Post
 							</Button>
 						</DialogFooter>
 					</form>

@@ -42,18 +42,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  username      String    @unique
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  bio           String?
-  location      String?
-  posts         Post[]
-  accounts      Account[]
-  sessions      Session[]
-  likes         Like[]
+  id             String    @id @default(cuid())
+  name           String?
+  username       String    @unique
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  profilePicture String
+  bio            String?
+  location       String?
+  posts          Post[]
+  accounts       Account[]
+  sessions       Session[]
+  likes          Like[]
 
   @@index([email, id])
 }

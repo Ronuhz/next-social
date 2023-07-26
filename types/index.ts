@@ -3,7 +3,7 @@ export interface UserType {
 		id: string
 		username: string | null
 		email: string | null
-		image: string | null
+		profilePicture: string | null
 		bio: string | null
 		location: string | null
 	}
@@ -16,7 +16,7 @@ export interface PostType {
 	userId: string
 	user: {
 		username: string
-		image: string | null
+		profilePicture: string | null
 	}
 	likes: { userId: string; postId: string }[]
 }

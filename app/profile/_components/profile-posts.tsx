@@ -40,9 +40,6 @@ const ProfilePosts = ({
 			loadingSkeleton={
 				<>
 					<PostSkeleton />
-					<PostSkeleton />
-					<PostSkeleton />
-					<PostSkeleton />
 				</>
 			}
 		/>

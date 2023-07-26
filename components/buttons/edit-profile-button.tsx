@@ -2,7 +2,7 @@
 
 import { Button } from '../ui/button'
 import { useState } from 'react'
-import { Edit3, Loader2 } from 'lucide-react'
+import { Edit3, Loader2, Upload } from 'lucide-react'
 import {
 	Dialog,
 	DialogTrigger,
@@ -47,13 +47,14 @@ export const EditProfileButton = ({
 	const editFormSchema = z.object({
 		username: z
 			.string()
-			.min(1, { message: 'Username must be at least 1 character long.' })
-			.max(20, { message: 'Username must be shorter then 20 characters.' })
+			.min(1, { message: 'Username must be at least 1 character long' })
+			.max(20, { message: 'Username must be shorter then 20 characters' })
 			.refine((val) => !/\s/.test(val), {
 				message: 'Username must not contain spaces',
 			})
-			.refine((val) => /^[a-z]+$/.test(val), {
-				message: 'Username must be all lowercase letters',
+			.refine((val) => /^[a-z0-9._-]+$/.test(val), {
+				message:
+					'Username must only contain lowercase letters, numbers and the following special characters (._-)',
 			}),
 		bio: z.string().max(100),
 		location: z.string().max(30),
@@ -129,6 +130,7 @@ export const EditProfileButton = ({
 								</FormItem>
 							)}
 						/>
+
 						<FormField
 							control={form.control}
 							name='bio'
@@ -167,14 +169,8 @@ export const EditProfileButton = ({
 						/>
 						<DialogFooter>
 							<Button type='submit' disabled={isLoading}>
-								{!isLoading ? (
-									'Save'
-								) : (
-									<>
-										<Loader2 className='mr-2 h-5 w-5 animate-spin' />
-										Saving
-									</>
-								)}
+								{isLoading && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
+								Save
 							</Button>
 						</DialogFooter>
 					</form>

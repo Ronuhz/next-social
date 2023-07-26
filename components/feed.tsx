@@ -36,8 +36,6 @@ const Feed = ({ session }: { session: Session }) => {
 				<>
 					<PostSkeleton />
 					<PostSkeleton />
-					<PostSkeleton />
-					<PostSkeleton />
 				</>
 			}
 		/>

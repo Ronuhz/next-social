@@ -10,7 +10,6 @@ import Linkify from 'linkify-react'
 import LikeButton from './buttons/like-button'
 import type { PostType } from '@/types'
 import { Heart } from 'lucide-react'
-import { useState } from 'react'
 
 export const revalidate = 216000
 
@@ -33,6 +32,7 @@ const Post = ({ post, session, queryKey }: Props) => {
 		(like) =>
 			like.postId === post.id && like.userId === (session?.user?.id ?? '')
 	)
+
 	return (
 		<Card className='w-[95vw] sm:w-[32rem]'>
 			<CardHeader>
@@ -43,7 +43,7 @@ const Post = ({ post, session, queryKey }: Props) => {
 					>
 						<ProfilePic
 							username={post?.user.username}
-							image={post?.user.image}
+							image={post?.user.profilePicture}
 							className='h-10 w-10'
 						/>
 						<div>
