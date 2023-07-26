@@ -4,6 +4,7 @@ import ProfilePic from './profile-pic'
 import ProfilePosts from './profile-posts'
 import { getSession } from '@/lib/session'
 import { UserType } from '@/types'
+import RefreshButton from '@/components/buttons/refresh-button'
 
 /**
  *
@@ -17,9 +18,11 @@ const Profile = async ({ user }: UserType) => {
 
 	return (
 		<div className='w-fit gap-4'>
-			<h1 className='mr-auto p-3 text-xl font-semibold uppercase sm:text-2xl'>
-				{isItMyProfile ? 'My Profile' : `${user.username}'s profile`}
-			</h1>
+			<div>
+				<h1 className='mr-auto p-3 text-xl font-semibold uppercase sm:text-2xl'>
+					{isItMyProfile ? 'My Profile' : `${user.username}'s profile`}
+				</h1>
+			</div>
 			<div className='flex w-[95vw] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
 				<ProfilePic
 					className='h-[92px] w-[92px]'
@@ -47,9 +50,12 @@ const Profile = async ({ user }: UserType) => {
 					)}
 				</div>
 			</div>
-			<h1 className='mr-auto p-3 pt-8 text-xl font-semibold uppercase sm:text-2xl'>
-				{isItMyProfile ? 'My Posts' : `Posts`}
-			</h1>
+			<div className='flex items-center justify-between p-2 pt-3'>
+				<h1 className='mr-auto text-xl font-semibold uppercase sm:text-2xl'>
+					{isItMyProfile ? 'My Posts' : `Posts`}
+				</h1>
+				<RefreshButton />
+			</div>
 			<div className='space-y-4'>
 				<ProfilePosts userId={user?.id} session={session} />
 			</div>

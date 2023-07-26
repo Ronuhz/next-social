@@ -2,6 +2,7 @@ import { SignInButton } from '@/components/buttons/auth-buttons'
 import { Separator } from '@/components/ui/separator'
 import Feed from '@/components/feed'
 import { getSession } from '@/lib/session'
+import RefreshButton from '@/components/buttons/refresh-button'
 
 export default async function Home() {
 	const session = await getSession()
@@ -25,8 +26,11 @@ export default async function Home() {
 
 	return (
 		<section className='flex flex-col items-center justify-center '>
-			<div className='w-[95vw] gap-4 space-y-4 sm:w-[32rem]'>
-				<h1 className='mr-auto pt-3 text-xl font-semibold sm:text-2xl'>FEED</h1>
+			<div className='w-[95vw] space-y-2 sm:w-[32rem]'>
+				<div className='flex h-full items-center justify-between pt-3'>
+					<h1 className='text-xl font-semibold sm:text-2xl'>FEED</h1>
+					<RefreshButton />
+				</div>
 				<Feed session={session} />
 			</div>
 		</section>
