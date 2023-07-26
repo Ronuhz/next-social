@@ -38,7 +38,7 @@ export default function RootLayout({
 					<body className={`${inter.className}`}>
 						<ThemeProvider attribute='class' defaultTheme='dark'>
 							<MainNav />
-							<main className='mt-14 standalone:mt-24'>
+							<main className='mt-14 standalone:mt-24 standalone:sm:mt-14'>
 								{children}
 								<Toaster />
 							</main>
