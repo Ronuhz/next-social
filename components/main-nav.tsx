@@ -29,7 +29,7 @@ const MainNav = async () => {
 
 	return (
 		<header className='fixed top-0 z-20 w-screen'>
-			<nav className='standalone:sm:safe-top flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end standalone:pt-12'>
+			<nav className='standalone:safe-top flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end standalone:sm:pt-2'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 				</Link>
