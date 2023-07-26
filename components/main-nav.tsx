@@ -16,7 +16,6 @@ import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
-import type { Session } from '@prisma/client'
 
 interface ProfileDropdownProps {
 	user: {
@@ -29,7 +28,7 @@ const MainNav = async () => {
 	const currentUser = await getCurrentUser()
 
 	return (
-		<header className='sticky top-0 z-20'>
+		<header className='sticky top-0 z-20 standalone:pt-32'>
 			<nav className=' flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>

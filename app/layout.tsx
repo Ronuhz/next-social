@@ -10,7 +10,7 @@ import QueryProvider from '@/components/providers/query-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-	title: 'Next Social',
+	title: 'NEXT Social',
 	description: 'A truly NEXT generation social platform.',
 }
 
@@ -27,6 +27,11 @@ export default function RootLayout({
 				suppressHydrationWarning
 			>
 				<head>
+					<meta
+						name='apple-mobile-web-app-status-bar-style'
+						content='black-translucent'
+					/>
+					<meta name='viewport' content='initial-scale=1, viewport-fit=cover' />
 					<link rel='manifest' href='/site.webmanifest' />
 				</head>
 				<QueryProvider>
