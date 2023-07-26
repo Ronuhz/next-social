@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
 import { saveAccountInfo } from '@/lib/actions'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -41,6 +41,8 @@ export const EditProfileButton = ({
 	location,
 	username,
 }: EditProfileProps) => {
+	const queryClient = useQueryClient()
+
 	const [isOpen, setIsOpen] = useState(false)
 	const { toast } = useToast()
 
@@ -72,11 +74,16 @@ export const EditProfileButton = ({
 	const { mutate, isLoading } = useMutation({
 		mutationFn: (values: z.infer<typeof editFormSchema>) =>
 			saveAccountInfo(values),
-		onSuccess: () => {
+		onSuccess: (data, values) => {
 			setIsOpen(false)
 			toast({
 				description: 'Account updated',
 			})
+
+			if (values.username !== username) {
+				queryClient.invalidateQueries({ queryKey: ['oldPosts'] })
+				console.log('invalidated')
+			}
 		},
 		onError: () =>
 			toast({
@@ -109,7 +116,13 @@ export const EditProfileButton = ({
 				{/* FORM */}
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit((values) => mutate(values))}
+						onSubmit={form.handleSubmit((values) =>
+							values.bio !== bio ||
+							values.location !== location ||
+							values.username !== username
+								? mutate(values)
+								: setIsOpen(false)
+						)}
 						className='space-y-4'
 					>
 						<FormField
