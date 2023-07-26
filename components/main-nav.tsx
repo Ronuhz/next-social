@@ -28,7 +28,7 @@ const MainNav = async () => {
 	const currentUser = await getCurrentUser()
 
 	return (
-		<header className='sticky top-0 z-20 standalone:pt-32'>
+		<header className='sticky top-0 z-20 standalone:h-80'>
 			<nav className=' flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
