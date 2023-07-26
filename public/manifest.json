@@ -1,7 +1,7 @@
 {
 	"name": "NEXT Social",
 	"short_name": "NEXT Social",
-	"theme_color": "white",
+	"theme_color": "black",
 	"background_color": "black",
 	"display": "standalone",
 	"orientation": "portrait",
