@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google'
 import MainNav from '@/components/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import QueryProvider from '@/components/providers/query-provider'
+import IOSSplashes from '@/public/assets/splashes/ios-splashes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,13 +31,14 @@ export default function RootLayout({
 				suppressHydrationWarning
 			>
 				<head>
+					<IOSSplashes />
 					<link rel='manifest' href='/site.webmanifest' />
 				</head>
 				<QueryProvider>
 					<body className={`${inter.className}`}>
 						<ThemeProvider attribute='class' defaultTheme='dark'>
 							<MainNav />
-							<main className='mt-14'>
+							<main className='mt-14 standalone:mt-20'>
 								{children}
 								<Toaster />
 							</main>
