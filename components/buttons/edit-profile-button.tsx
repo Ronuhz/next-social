@@ -2,7 +2,7 @@
 
 import { Button } from '../ui/button'
 import { useState } from 'react'
-import { Edit3, Loader2, Upload } from 'lucide-react'
+import { Edit3, Loader2 } from 'lucide-react'
 import {
 	Dialog,
 	DialogTrigger,
@@ -116,13 +116,13 @@ export const EditProfileButton = ({
 				{/* FORM */}
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit((values) =>
+						onSubmit={form.handleSubmit((values) => {
 							values.bio !== bio ||
 							values.location !== location ||
 							values.username !== username
 								? mutate(values)
 								: setIsOpen(false)
-						)}
+						})}
 						className='space-y-4'
 					>
 						<FormField
