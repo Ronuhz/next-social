@@ -17,13 +17,6 @@ import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 
-interface ProfileDropdownProps {
-	user: {
-		username: string
-		image?: string | null | undefined
-	}
-}
-
 const MainNav = async () => {
 	const currentUser = await getCurrentUser()
 

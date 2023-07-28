@@ -15,7 +15,7 @@ declare module 'next-auth' {
 const prismaAdapter = PrismaAdapter(prisma)
 
 // *overrides the user creation process provided by the prisma adapter
-// *to include a username for the user based on the email
+// *to include a username for the user, based on the email
 // *ex. from "john@example.com" username will be "john"
 // @ts-ignore
 prismaAdapter.createUser = (data) => {

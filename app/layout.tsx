@@ -1,12 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@/components/providers/theme-provider'
-import { AuthProvider } from '@/components/providers/auth-provider'
 import { Inter } from 'next/font/google'
 import MainNav from '@/components/main-nav'
 import { Toaster } from '@/components/ui/toaster'
-import QueryProvider from '@/components/providers/query-provider'
 import AppleSplashes from '@/public/assets/splash/apple-splashes'
+import Providers from '@/components/providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,29 +21,25 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<AuthProvider>
-			<html
-				lang='en'
-				className='h-full w-full select-none antialiased'
-				style={{ WebkitTapHighlightColor: 'transparent' }}
-				suppressHydrationWarning
-			>
-				<head>
-					<AppleSplashes />
-					<link rel='manifest' href='/manifest.json' />
-				</head>
-				<QueryProvider>
-					<body className={`${inter.className}`}>
-						<ThemeProvider attribute='class' defaultTheme='dark'>
-							<MainNav />
-							<main className='mt-14 standalone:mt-24 standalone:sm:mt-14'>
-								{children}
-								<Toaster />
-							</main>
-						</ThemeProvider>
-					</body>
-				</QueryProvider>
-			</html>
-		</AuthProvider>
+		<html
+			lang='en'
+			className='h-full w-full select-none antialiased'
+			style={{ WebkitTapHighlightColor: 'transparent' }}
+			suppressHydrationWarning
+		>
+			<head>
+				<AppleSplashes />
+				<link rel='manifest' href='/manifest.json' />
+			</head>
+			<body className={`${inter.className}`}>
+				<Providers>
+					<MainNav />
+					<main className='mt-14 standalone:mt-24 standalone:sm:mt-14'>
+						{children}
+						<Toaster />
+					</main>
+				</Providers>
+			</body>
+		</html>
 	)
 }

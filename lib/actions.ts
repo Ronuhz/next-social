@@ -66,34 +66,6 @@ export async function deletePost(postId: string): Promise<void> {
 	})
 }
 
-interface saveAccountInfoProps {
-	username: string
-	profilePicture?: File
-	bio: string
-	location: string
-}
-
-export async function saveAccountInfo({
-	username,
-	bio,
-	location,
-}: saveAccountInfoProps): Promise<void> {
-	return new Promise<void>(async (resolve, reject) => {
-		const session = await getSession()
-
-		try {
-			await prisma.user.update({
-				where: { id: session?.user?.id },
-				data: { username, bio, location },
-			})
-			resolve()
-			revalidatePath('/')
-		} catch (error) {
-			reject(error)
-		}
-	})
-}
-
 export async function updateProfilePic(fileUrl: string) {
 	const session = await getSession()
 	try {

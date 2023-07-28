@@ -1,5 +1,5 @@
 import { MapPin, Files } from 'lucide-react'
-import { EditProfileButton } from '@/components/buttons/edit-profile-button'
+import { EditProfileButton } from '@/components/buttons/edit-profile/button'
 import ProfilePic from './profile-pic'
 import ProfilePosts from './profile-posts'
 import { getSession } from '@/lib/session'

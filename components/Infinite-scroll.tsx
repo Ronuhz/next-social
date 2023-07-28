@@ -40,7 +40,9 @@ const InfiniteScroll = ({
 		<Card>
 			<CardHeader>Oh, no! Something went wrong!</CardHeader>
 			<CardContent className='-mt-6'>
-				<CardDescription>{"Or you're not logged in"}</CardDescription>
+				<CardDescription>
+					{"it's possible that you're not logged in"}
+				</CardDescription>
 			</CardContent>
 		</Card>
 	) : (

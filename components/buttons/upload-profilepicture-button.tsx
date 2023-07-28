@@ -13,7 +13,7 @@ import {
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { useState } from 'react'
-import { useUploadThing } from '@/utils/uploadthing'
+import { useUploadThing } from '@/lib/uploadthing'
 import { toast } from '../ui/use-toast'
 import { updateProfilePic } from '@/lib/actions'
 import imageCompression from 'browser-image-compression'

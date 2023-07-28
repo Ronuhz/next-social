@@ -1,4 +1,4 @@
-//* Only used when the display mode is standalone aka. PWA (Progressive Web Application)
+//* Only used when the display mode is standalone aka. with PWAs (Progressive Web Applications)
 
 'use client'
 import { RotateCw } from 'lucide-react'

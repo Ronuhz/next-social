@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import { useState } from 'react'
 import { Edit3, Loader2 } from 'lucide-react'
 import {
@@ -15,8 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/components/ui/use-toast'
-import { saveAccountInfo } from '@/lib/actions'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,39 +27,18 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '../ui/form'
-
-interface EditProfileProps {
-	username: string
-	bio: string
-	location: string
-}
+} from '../../ui/form'
+import { catchError } from '@/lib/utils'
+import { type ProfileInfoProps, editFormSchema } from './utils'
+import saveProfileInfo from './action'
 
 export const EditProfileButton = ({
 	bio,
 	location,
 	username,
-}: EditProfileProps) => {
-	const queryClient = useQueryClient()
-
+}: ProfileInfoProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { toast } = useToast()
-
-	const editFormSchema = z.object({
-		username: z
-			.string()
-			.min(1, { message: 'Username must be at least 1 character long' })
-			.max(20, { message: 'Username must be shorter then 20 characters' })
-			.refine((val) => !/\s/.test(val), {
-				message: 'Username must not contain spaces',
-			})
-			.refine((val) => /^[a-z0-9._-]+$/.test(val), {
-				message:
-					'Username must only contain lowercase letters, numbers and the following special characters (._-)',
-			}),
-		bio: z.string().max(100),
-		location: z.string().max(30),
-	})
 
 	const form = useForm<z.infer<typeof editFormSchema>>({
 		resolver: zodResolver(editFormSchema),
@@ -73,25 +51,27 @@ export const EditProfileButton = ({
 
 	const { mutate, isLoading } = useMutation({
 		mutationFn: (values: z.infer<typeof editFormSchema>) =>
-			saveAccountInfo(values),
+			saveProfileInfo(values),
 		onSuccess: (data, values) => {
 			setIsOpen(false)
 			toast({
 				description: 'Account updated',
 			})
-
-			if (values.username !== username) {
-				queryClient.invalidateQueries({ queryKey: ['oldPosts'] })
-				console.log('invalidated')
-			}
 		},
-		onError: () =>
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Something went wrong.',
-				description: 'There was a problem with your request.',
-			}),
+		onError: (error) => catchError(error),
 	})
+
+	const onSubmit = (values: z.infer<typeof editFormSchema>) => {
+		if (
+			values.bio !== bio ||
+			values.location !== location ||
+			values.username !== username
+		) {
+			mutate(values)
+		} else {
+			setIsOpen(false)
+		}
+	}
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -116,13 +96,7 @@ export const EditProfileButton = ({
 				{/* FORM */}
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit((values) => {
-							values.bio !== bio ||
-							values.location !== location ||
-							values.username !== username
-								? mutate(values)
-								: setIsOpen(false)
-						})}
+						onSubmit={form.handleSubmit((values) => onSubmit(values))}
 						className='space-y-4'
 					>
 						<FormField
