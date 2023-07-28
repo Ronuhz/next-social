@@ -8,6 +8,7 @@ import {
 	DialogContent,
 	DialogTitle,
 	DialogFooter,
+	DialogDescription,
 } from '../ui/dialog'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
@@ -17,7 +18,13 @@ import { toast } from '../ui/use-toast'
 import { updateProfilePic } from '@/lib/actions'
 import imageCompression from 'browser-image-compression'
 
-const EditProfilePictureButton = () => {
+const options = {
+	maxSizeMB: 0.01,
+	maxWidthOrHeight: 96,
+	useWebWorker: true,
+}
+
+const UploadProfilePictureButton = () => {
 	const [file, setFile] = useState<File | undefined>(undefined)
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -29,7 +36,7 @@ const EditProfilePictureButton = () => {
 			if (fileUrl) {
 				updateProfilePic(fileUrl)
 				toast({
-					description: 'Profile picture uploaded',
+					description: 'Profile picture updated',
 				})
 			} else {
 				toast({
@@ -49,17 +56,15 @@ const EditProfilePictureButton = () => {
 	})
 
 	const onUpload = async (file: File) => {
-		const options = {
-			maxSizeMB: 0.01,
-			maxWidthOrHeight: 96,
-			useWebWorker: true,
-		}
-
 		try {
 			const compressedFile = await imageCompression(file, options)
 			startUpload([compressedFile])
 		} catch (error) {
-			console.log(error)
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Something went wrong.',
+				description: 'Only images are allowed.',
+			})
 		}
 	}
 	return (
@@ -89,6 +94,9 @@ const EditProfilePictureButton = () => {
 						onChange={(e) => setFile(e.target.files![0])}
 					/>
 				</div>
+				<DialogDescription className='-mt-3'>
+					Only image formats like png and jpeg are allowed.
+				</DialogDescription>
 				<DialogFooter>
 					<Button
 						disabled={!file || isUploading}
@@ -103,4 +111,4 @@ const EditProfilePictureButton = () => {
 	)
 }
 
-export default EditProfilePictureButton
+export default UploadProfilePictureButton

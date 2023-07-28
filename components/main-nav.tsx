@@ -60,7 +60,7 @@ const ProfileDropdown = async () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant='ghost' size='icon'>
+				<Button variant='ghost' size='icon' className='rounded-full p-2'>
 					<ProfilePic
 						username={user?.username ?? ''}
 						image={user?.profilePicture}
@@ -69,8 +69,6 @@ const ProfileDropdown = async () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='mr-2 w-56'>
-				<DropdownMenuLabel>My Account</DropdownMenuLabel>
-				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem className='cursor-pointer' asChild>
 						<Link href='/profile'>

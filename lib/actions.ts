@@ -104,12 +104,10 @@ export async function updateProfilePic(fileUrl: string) {
 		})
 
 		if (user?.profilePicture.includes(substringToRemove)) {
-			console.log('Deleting old image')
 			const modifiedURL = user?.profilePicture.replace(substringToRemove, '')
 			await utapi.deleteFiles([modifiedURL])
 		}
 
-		console.log('Updating database')
 		await prisma.user.update({
 			where: { id: session?.user.id },
 			data: {

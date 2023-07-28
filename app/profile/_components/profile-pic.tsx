@@ -32,7 +32,7 @@ const ProfilePic = ({
 	fallbackTextSize,
 	...rest
 }: Props) => {
-	const placeholder = username ? username.substring(0, 2) : ''
+	const placeholder = username ? username.substring(0, 2) : username[0]
 
 	return (
 		<Avatar className={className} {...rest}>

@@ -12,8 +12,7 @@ import {
 	TooltipContent,
 	TooltipProvider,
 } from '@/components/ui/tooltip'
-import EditProfilePictureButton from '@/components/buttons/edit-profilepicture-button'
-import { ProfileSkeleton } from '@/components/skeletons'
+import UploadProfilePictureButton from '@/components/buttons/upload-profilepicture-button'
 
 /**
  *
@@ -40,7 +39,7 @@ const Profile = async ({ user }: UserType) => {
 			</div>
 			<div className='flex w-[95vw] flex-row items-center gap-4 rounded-xl border bg-card bg-opacity-50 p-3 text-card-foreground shadow sm:w-[32rem] sm:p-6'>
 				<div className='relative'>
-					{isItMyProfile ? <EditProfilePictureButton /> : <></>}
+					{isItMyProfile ? <UploadProfilePictureButton /> : <></>}
 					<ProfilePic
 						className='h-[92px] w-[92px]'
 						fallbackTextSize='text-3xl'
