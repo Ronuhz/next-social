@@ -3,7 +3,7 @@
 import Post from './post'
 import { Session } from 'next-auth'
 import InfiniteScroll from './Infinite-scroll'
-import PostSkeleton from './skeletons'
+import { PostSkeleton } from './skeletons'
 import { PageType } from '@/types'
 /**
  * *fetches the recent posts from the database

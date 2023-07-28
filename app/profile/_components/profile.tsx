@@ -13,6 +13,7 @@ import {
 	TooltipProvider,
 } from '@/components/ui/tooltip'
 import EditProfilePictureButton from '@/components/buttons/edit-profilepicture-button'
+import { ProfileSkeleton } from '@/components/skeletons'
 
 /**
  *

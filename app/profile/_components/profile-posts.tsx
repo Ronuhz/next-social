@@ -4,7 +4,7 @@ import { Session } from 'next-auth'
 import { PageType } from '@/types'
 import InfiniteScroll from '@/components/Infinite-scroll'
 import Post from '@/components/post'
-import PostSkeleton from '@/components/skeletons'
+import { PostSkeleton } from '@/components/skeletons'
 
 const fetchPosts = async ({ pageParam = 1 }, userId: string) => {
 	const res = await fetch(
