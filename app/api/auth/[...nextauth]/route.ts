@@ -20,7 +20,13 @@ const prismaAdapter = PrismaAdapter(prisma)
 // @ts-ignore
 prismaAdapter.createUser = (data) => {
 	const atIndex = data.email.indexOf('@')
-	const username = data.email.substring(0, atIndex).toLowerCase()
+	const emailNameLowercase = data.email.substring(0, atIndex).toLowerCase()
+
+	// is the emailName is longer then 20 characters then with slice we return the first 20
+	const username =
+		emailNameLowercase.length < 21
+			? emailNameLowercase
+			: emailNameLowercase.slice(0, 20)
 
 	return prisma.user.create({
 		data: { ...data, username, profilePicture: data.image ?? '' },

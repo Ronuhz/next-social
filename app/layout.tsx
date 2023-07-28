@@ -23,17 +23,17 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html
-			lang='en'
-			className='h-full w-full select-none antialiased'
-			style={{ WebkitTapHighlightColor: 'transparent' }}
-			suppressHydrationWarning
-		>
-			<head>
-				<AppleSplashes />
-				<link rel='manifest' href='/manifest.json' />
-			</head>
-			<AuthProvider>
+		<AuthProvider>
+			<html
+				lang='en'
+				className='h-full w-full select-none antialiased'
+				style={{ WebkitTapHighlightColor: 'transparent' }}
+				suppressHydrationWarning
+			>
+				<head>
+					<AppleSplashes />
+					<link rel='manifest' href='/manifest.json' />
+				</head>
 				<QueryProvider>
 					<body className={`${inter.className}`}>
 						<ThemeProvider attribute='class' defaultTheme='dark'>
@@ -45,7 +45,7 @@ export default function RootLayout({
 						</ThemeProvider>
 					</body>
 				</QueryProvider>
-			</AuthProvider>
-		</html>
+			</html>
+		</AuthProvider>
 	)
 }

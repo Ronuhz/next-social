@@ -103,17 +103,27 @@ export async function updateProfilePic(fileUrl: string) {
 			select: { profilePicture: true },
 		})
 
-		if (user?.profilePicture.includes(substringToRemove)) {
-			const modifiedURL = user?.profilePicture.replace(substringToRemove, '')
-			await utapi.deleteFiles([modifiedURL])
-		}
+		console.log(user)
 
-		await prisma.user.update({
-			where: { id: session?.user.id },
-			data: {
-				profilePicture: fileUrl,
-			},
-		})
+		// Tries to delete the old profile pic from Uploadthing
+		// if an error occurs then delete the newly uploaded one
+		try {
+			if (user?.profilePicture.includes(substringToRemove)) {
+				const modifiedURL = user?.profilePicture.replace(substringToRemove, '')
+				await utapi.deleteFiles([modifiedURL])
+			}
+
+			await prisma.user.update({
+				where: { id: session?.user.id },
+				data: {
+					profilePicture: fileUrl,
+				},
+			})
+		} catch (error) {
+			const modifiedURL = fileUrl.replace(substringToRemove, '')
+			await utapi.deleteFiles([modifiedURL])
+			console.log(error)
+		}
 
 		revalidatePath('/')
 	} catch (error) {
