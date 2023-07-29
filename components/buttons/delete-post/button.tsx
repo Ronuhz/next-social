@@ -1,9 +1,8 @@
 'use client'
 
-import { Button, buttonVariants } from '../ui/button'
-import { Loader2, Trash2 } from 'lucide-react'
+import { Button, buttonVariants } from '../../ui/button'
+import { Trash2 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
-import { deletePost } from '@/lib/actions'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PostType } from '@/types'
 import {
@@ -16,23 +15,21 @@ import {
 	AlertDialogFooter,
 	AlertDialogCancel,
 	AlertDialogAction,
-} from '../ui/alert-dialog'
-import { cn } from '@/lib/utils'
+} from '../../ui/alert-dialog'
+import { catchError, cn } from '@/lib/utils'
+import { DeletePostProps } from './utils'
+import { deletePost } from './action'
 
-interface Props {
-	postId: string
-	queryKey: string[]
-}
-
-export const DeletePostButton = ({ postId, queryKey }: Props) => {
+export const DeletePostButton = ({ postId, queryKey }: DeletePostProps) => {
 	const queryClient = useQueryClient()
+
 	const { toast } = useToast()
 
-	const { mutateAsync, isLoading } = useMutation({
+	const { mutate, isLoading } = useMutation({
 		mutationFn: (postId: string) => deletePost(postId),
 		onMutate: async (postId) => {
 			// Optimistic post deletion
-			await queryClient.cancelQueries({ queryKey: queryKey })
+			await queryClient.cancelQueries({ queryKey })
 			const previousPosts: any = queryClient.getQueryData(queryKey)
 
 			const optimisticPosts = previousPosts.pages.map((page: any) => {
@@ -50,17 +47,14 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ['posts'],
+				queryKey,
 			})
 			toast({ description: 'Post deleted' })
 		},
-		onError: (context: any) => {
-			queryClient.setQueriesData(['posts'], context.previousPosts)
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Something went wrong.',
-				description: 'There was a problem with your request.',
-			})
+		onError: (error, variables, context) => {
+			// Rolls back to the original posts which are provided from the onMutate with return
+			queryClient.setQueriesData(queryKey, context?.previousPosts)
+			catchError(error)
 		},
 	})
 
@@ -74,11 +68,7 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 					disabled={isLoading}
 					className='mb-auto hover:text-red-600'
 				>
-					{!isLoading ? (
-						<Trash2 size={18} />
-					) : (
-						<Loader2 className='h-5 w-5 animate-spin' />
-					)}
+					<Trash2 size={18} />
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
@@ -93,7 +83,7 @@ export const DeletePostButton = ({ postId, queryKey }: Props) => {
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
 					<AlertDialogAction
 						className={cn(buttonVariants({ variant: 'destructive' }))}
-						onClick={() => mutateAsync(postId)}
+						onClick={() => mutate(postId)}
 					>
 						Delete
 					</AlertDialogAction>

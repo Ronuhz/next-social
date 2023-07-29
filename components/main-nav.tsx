@@ -6,12 +6,11 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
-import { NewPostButton } from './buttons/new-post-button'
+import NewPostButton from './buttons/new-post/button'
 import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'

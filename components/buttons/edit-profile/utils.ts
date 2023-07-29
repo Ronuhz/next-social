@@ -16,8 +16,4 @@ export const editFormSchema = z.object({
 	location: z.string().max(30),
 })
 
-export type ProfileInfoProps = {
-	username: string
-	bio: string
-	location: string
-}
+export type ProfileInfoProps = z.infer<typeof editFormSchema>
