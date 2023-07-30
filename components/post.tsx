@@ -7,7 +7,7 @@ import ProfilePic from '../app/profile/_components/profile-pic'
 import { Session } from 'next-auth'
 import { DeletePostButton } from './buttons/delete-post/button'
 import Linkify from 'linkify-react'
-import LikeButton from './buttons/like-button'
+import LikeButton from './buttons/like/button'
 import type { PostType } from '@/types'
 import { Heart } from 'lucide-react'
 

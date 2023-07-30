@@ -2,39 +2,36 @@
 
 import { Heart } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
-import { handleLike } from '@/lib/actions'
 import { useState } from 'react'
-
-interface Props {
-	isLikedByCurrentUser: boolean
-	postId: string
-	userId: string
-	likeCount: number
-}
-
-interface Data {
-	postId: string
-	userId: string
-}
+import { handleLike } from './action'
+import { catchError } from '@/lib/utils'
+import { LikeButtonProps, PostData } from './utils'
 
 const LikeButton = ({
 	isLikedByCurrentUser,
 	postId,
 	userId,
 	likeCount,
-}: Props) => {
+}: LikeButtonProps) => {
 	const [isLiked, setIsLiked] = useState(isLikedByCurrentUser)
 	const [likeAmount, setLikeAmount] = useState(likeCount)
 
-	const data: Data = { postId, userId }
-	const { mutate } = useMutation({
-		mutationFn: async (data: Data) => handleLike(data),
-		onMutate: () => {
-			// *Optimistically updates the like button and DOESN'T invalidate or
-			// *refetch the data (posts) because it's not necessary
+	const data: PostData = { postId, userId }
+	//* DOESN'T invalidate or refetch the data (posts) because it's not necessary
+	const updateOptimistically = () => {
+		setIsLiked((prev) => !prev)
+		setLikeAmount((prev) => (isLiked ? prev - 1 : prev + 1))
+	}
 
-			setIsLiked((prev) => !prev)
-			setLikeAmount((prev) => (isLiked ? prev - 1 : prev + 1))
+	const { mutate } = useMutation({
+		mutationFn: (data: PostData) => handleLike(data),
+		onMutate: () => {
+			updateOptimistically()
+		},
+		onError: (error) => {
+			//* Reverts the changes of the onMutates optimistic update if an error occurred
+			updateOptimistically()
+			catchError(error)
 		},
 	})
 	return (
@@ -54,7 +51,9 @@ const LikeButton = ({
 					/>
 				)}
 			</div>
-			<p className='text-sm'>{likeAmount}</p>
+			<p className={`text-sm ${isLiked ? 'font-bold text-red-500' : ''}`}>
+				{likeAmount}
+			</p>
 		</div>
 	)
 }
