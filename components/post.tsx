@@ -3,13 +3,13 @@
 import { getTimeAgo } from '@/lib/utils'
 import { Card, CardContent, CardFooter, CardHeader } from './ui/card'
 import Link from 'next/link'
-import ProfilePic from '../app/profile/_components/profile-pic'
 import { Session } from 'next-auth'
 import { DeletePostButton } from './buttons/delete-post/button'
 import Linkify from 'linkify-react'
 import LikeButton from './buttons/like/button'
 import type { PostType } from '@/types'
 import { Heart } from 'lucide-react'
+import ProfilePic from '@/app/user/_components/profile-pic'
 
 export const revalidate = 216000
 
@@ -38,7 +38,7 @@ const Post = ({ post, session, queryKey }: Props) => {
 			<CardHeader>
 				<div className='inline-flex items-center justify-between'>
 					<Link
-						href={`/profile/${post?.userId}`}
+						href={`/user/${post?.userId}`}
 						className={`inline-flex items-center gap-4`}
 					>
 						<ProfilePic

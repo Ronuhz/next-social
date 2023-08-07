@@ -11,10 +11,10 @@ import {
 } from './ui/dropdown-menu'
 import { Button } from './ui/button'
 import NewPostButton from './buttons/new-post/button'
-import ProfilePic from '../app/profile/_components/profile-pic'
 import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
+import ProfilePic from '@/app/user/_components/profile-pic'
 
 const MainNav = async () => {
 	const currentUser = await getCurrentUser()
@@ -63,7 +63,7 @@ const ProfileDropdown = async () => {
 			<DropdownMenuContent className='mr-2 w-56'>
 				<DropdownMenuGroup>
 					<DropdownMenuItem className='cursor-pointer' asChild>
-						<Link href='/profile'>
+						<Link href='/user'>
 							<User className='mr-2 h-4 w-4' />
 							<span>Profile</span>
 						</Link>
