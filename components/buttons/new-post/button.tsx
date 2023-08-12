@@ -28,6 +28,12 @@ import { Button } from '@/components/ui/button'
 import { catchError } from '@/lib/utils'
 import { newPostFormSchema } from './utils'
 import createNewPost from './action'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const NewPostButton = () => {
 	const queryClient = useQueryClient()
@@ -60,12 +66,20 @@ const NewPostButton = () => {
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogTrigger asChild>
-				<Button size='sm' className='gap-1' aria-label='New Post'>
-					<Edit height={18} width={18} />
-					New Post
-				</Button>
-			</DialogTrigger>
+			<TooltipProvider>
+				<Tooltip>
+					<DialogTrigger asChild>
+						<TooltipTrigger asChild>
+							<Button size='icon' className='gap-1' aria-label='New Post'>
+								<Edit height={18} width={18} />
+							</Button>
+						</TooltipTrigger>
+					</DialogTrigger>
+					<TooltipContent>
+						<p>New Post</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 			<DialogContent
 				disabled={isLoading}
 				onEscapeKeyDown={(e) => (isLoading ? e.preventDefault() : {})}

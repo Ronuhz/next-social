@@ -15,17 +15,16 @@ import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import ProfilePic from '@/app/user/_components/profile-pic'
+import { SignedIn } from './auth-helpers'
 
 const MainNav = async () => {
-	const currentUser = await getCurrentUser()
-
 	return (
 		<header className='fixed top-0 z-20 w-screen'>
 			<nav className='standalone:safe-top flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 				</Link>
-				{currentUser && (
+				<SignedIn>
 					<ul className='inline-flex items-center gap-3'>
 						<li className='mb-1'>
 							<NewPostButton />
@@ -34,7 +33,7 @@ const MainNav = async () => {
 							<ProfileDropdown />
 						</li>
 					</ul>
-				)}
+				</SignedIn>
 			</nav>
 			<Separator />
 		</header>

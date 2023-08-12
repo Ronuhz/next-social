@@ -6,8 +6,6 @@ import RefreshButton from '@/components/buttons/refresh-button'
 import { SignedIn, SignedOut } from '@/components/auth-helpers'
 
 export default async function Home() {
-	const session = await getSession()
-
 	return (
 		<>
 			<SignedOut>
@@ -31,10 +29,16 @@ export default async function Home() {
 							<h1 className='text-xl font-semibold sm:text-2xl'>FEED</h1>
 							<RefreshButton />
 						</div>
-						<Feed session={session!} />
+						<AsyncFeed />
 					</div>
 				</section>
 			</SignedIn>
 		</>
 	)
+}
+
+const AsyncFeed = async () => {
+	const session = await getSession()
+
+	return <Feed session={session!} />
 }
