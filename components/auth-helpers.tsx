@@ -6,6 +6,13 @@ type Props = {
 	children: React.ReactNode
 }
 
+export const AuthLoading = ({ children }: Props) => {
+	const { data: session, status } = useSession()
+	if (status === 'loading') {
+		return <>{children}</>
+	} else return <></>
+}
+
 export const SignedOut = ({ children }: Props) => {
 	const { data: session, status } = useSession()
 	if (status === 'loading' || status === 'unauthenticated') {

@@ -4,6 +4,7 @@ import Feed from '@/components/feed'
 import { getSession } from '@/lib/session'
 import RefreshButton from '@/components/buttons/refresh-button'
 import { SignedIn, SignedOut } from '@/components/auth-helpers'
+import { Suspense } from 'react'
 
 export default async function Home() {
 	return (
@@ -29,7 +30,9 @@ export default async function Home() {
 							<h1 className='text-xl font-semibold sm:text-2xl'>FEED</h1>
 							<RefreshButton />
 						</div>
-						<AsyncFeed />
+						<Suspense fallback={<p>Loading FEED...</p>}>
+							<AsyncFeed />
+						</Suspense>
 					</div>
 				</section>
 			</SignedIn>
