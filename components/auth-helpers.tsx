@@ -15,7 +15,7 @@ export const AuthLoading = ({ children }: Props) => {
 
 export const SignedOut = ({ children }: Props) => {
 	const { data: session, status } = useSession()
-	if (status === 'loading' || status === 'unauthenticated') {
+	if (status === 'unauthenticated') {
 		return <>{children}</>
 	} else return <></>
 }

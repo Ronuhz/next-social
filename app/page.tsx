@@ -3,12 +3,15 @@ import { Separator } from '@/components/ui/separator'
 import Feed from '@/components/feed'
 import { getSession } from '@/lib/session'
 import RefreshButton from '@/components/buttons/refresh-button'
-import { SignedIn, SignedOut } from '@/components/auth-helpers'
-import { Suspense } from 'react'
+import { AuthLoading, SignedIn, SignedOut } from '@/components/auth-helpers'
+import Loading from './loading'
 
 export default async function Home() {
 	return (
 		<>
+			<AuthLoading>
+				<Loading />
+			</AuthLoading>
 			<SignedOut>
 				<section className='flex h-[60vh] flex-col items-center justify-center'>
 					<h1 className='balance pb-1 pt-20 text-center text-4xl font-extrabold'>
@@ -30,9 +33,7 @@ export default async function Home() {
 							<h1 className='text-xl font-semibold sm:text-2xl'>FEED</h1>
 							<RefreshButton />
 						</div>
-						<Suspense fallback={<p>Loading FEED...</p>}>
-							<AsyncFeed />
-						</Suspense>
+						<AsyncFeed />
 					</div>
 				</section>
 			</SignedIn>
