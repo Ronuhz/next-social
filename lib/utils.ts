@@ -1,3 +1,4 @@
+import { toast } from '@/components/ui/use-toast'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -31,4 +32,12 @@ export function getTimeAgo(createdDate: Date) {
 	} else {
 		return `Now`
 	}
+}
+
+export function catchError(err: unknown) {
+	return toast({
+		variant: 'destructive',
+		title: 'Uh oh! Something went wrong.',
+		description: 'There was a problem with your request.',
+	})
 }

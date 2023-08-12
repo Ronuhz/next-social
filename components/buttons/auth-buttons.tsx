@@ -1,25 +1,27 @@
 'use client'
 
-import { LogOut } from 'lucide-react'
+import { Loader2, LogOut } from 'lucide-react'
 import { Button, ButtonProps } from '../ui/button'
 import { signIn, signOut } from 'next-auth/react'
+import { useState } from 'react'
 
 export const SignInButton = (props: ButtonProps) => {
+	const [isSigningIn, setIsSigningIn] = useState(false)
 	return (
-		<Button size='sm' {...props} onClick={() => signIn('google')}>
-			Log In
+		<Button
+			size='sm'
+			disabled={isSigningIn}
+			onClick={() => {
+				setIsSigningIn(true)
+				signIn('google')
+			}}
+			{...props}
+		>
+			{isSigningIn && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
+			Login
 		</Button>
 	)
 }
-
-export const SignOutButton = () => {
-	return (
-		<Button variant='outline' size='sm' onClick={() => signOut()}>
-			Log Out
-		</Button>
-	)
-}
-
 export const SignOutDropdownItem = () => {
 	return (
 		<span
@@ -27,7 +29,7 @@ export const SignOutDropdownItem = () => {
 			onClick={() => signOut()}
 		>
 			<LogOut className='mr-2 h-4 w-4' />
-			<span>Log Out</span>
+			<span>Logout</span>
 		</span>
 	)
 }

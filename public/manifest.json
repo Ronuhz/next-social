@@ -1,0 +1,36 @@
+{
+	"name": "NEXT Social",
+	"short_name": "NEXT Social",
+	"theme_color": "black",
+	"background_color": "black",
+	"display": "standalone",
+	"orientation": "portrait",
+	"scope": "/",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "assets/logo/manifest-icon-192.maskable.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/logo/N.svg",
+			"sizes": "192x192",
+			"type": "mage/svg+xml",
+			"purpose": "maskable"
+		},
+		{
+			"src": "assets/logo/manifest-icon-512.maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/logo/N.svg",
+			"sizes": "512x512",
+			"type": "mage/svg+xml",
+			"purpose": "maskable"
+		}
+	]
+}
