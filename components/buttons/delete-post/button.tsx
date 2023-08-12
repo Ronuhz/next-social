@@ -19,6 +19,12 @@ import {
 import { catchError, cn } from '@/lib/utils'
 import { DeletePostProps } from './utils'
 import { deletePost } from './action'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 export const DeletePostButton = ({ postId, queryKey }: DeletePostProps) => {
 	const queryClient = useQueryClient()
@@ -60,17 +66,26 @@ export const DeletePostButton = ({ postId, queryKey }: DeletePostProps) => {
 
 	return (
 		<AlertDialog>
-			<AlertDialogTrigger asChild>
-				<Button
-					variant='ghost'
-					size='icon'
-					aria-label='Delete Post'
-					disabled={isLoading}
-					className='mb-auto hover:text-red-600'
-				>
-					<Trash2 size={18} />
-				</Button>
-			</AlertDialogTrigger>
+			<TooltipProvider>
+				<Tooltip>
+					<AlertDialogTrigger asChild>
+						<TooltipTrigger asChild>
+							<Button
+								variant='ghost'
+								size='icon'
+								aria-label='Delete Post'
+								disabled={isLoading}
+								className='mb-auto hover:text-red-600'
+							>
+								<Trash2 size={18} />
+							</Button>
+						</TooltipTrigger>
+					</AlertDialogTrigger>
+					<TooltipContent>
+						<p>Delete</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>Delete Post?</AlertDialogTitle>

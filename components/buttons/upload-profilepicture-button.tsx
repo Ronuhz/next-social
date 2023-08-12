@@ -17,6 +17,12 @@ import { useUploadThing } from '@/lib/uploadthing'
 import { toast } from '../ui/use-toast'
 import { updateProfilePic } from '@/lib/actions'
 import imageCompression from 'browser-image-compression'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '../ui/tooltip'
 
 const options = {
 	maxSizeMB: 0.01,
@@ -75,9 +81,19 @@ const UploadProfilePictureButton = () => {
 				setFile(undefined)
 			}}
 		>
-			<DialogTrigger asChild>
-				<SmilePlus className='absolute left-3/4 z-10 h-8 w-8 cursor-pointer rounded-full border bg-background p-1' />
-			</DialogTrigger>
+			<TooltipProvider>
+				<Tooltip>
+					<DialogTrigger asChild>
+						<TooltipTrigger asChild>
+							<SmilePlus className='absolute left-3/4 z-10 h-8 w-8 cursor-pointer rounded-full border bg-background p-1' />
+						</TooltipTrigger>
+					</DialogTrigger>
+					<TooltipContent>
+						<p>Upload picture</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+
 			<DialogContent
 				onEscapeKeyDown={(e) => (isUploading ? e.preventDefault() : {})}
 				disabled={isUploading}

@@ -16,10 +16,13 @@ export const revalidate = 300
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const user = await prisma.user.findUnique({
 		where: { id: params.id },
-		select: { name: true },
+		select: { username: true },
 	})
 	return {
-		title: `${user?.name + "'s profile" ?? 'Profile'}`,
+		title: `${
+			user?.username ? +`${user?.username}'s profile` : 'User Not Found'
+		}`,
+		themeColor: 'white',
 		description: 'View a users profile and their posts.',
 	}
 }

@@ -48,7 +48,7 @@ const Profile = async ({ user }: UserType) => {
 					/>
 				</div>
 				<div className='mb-auto flex flex-col overflow-hidden'>
-					<p className='inline-flex items-center gap-1 pb-0 font-semibold sm:pb-2 sm:text-xl'>
+					<p className='inline-flex items-center gap-2 pb-0 font-semibold sm:pb-2 sm:text-xl'>
 						{user?.username}
 						{user?.email === session?.user?.email && (
 							<EditProfileButton

@@ -6,6 +6,12 @@ import { buttonVariants } from '../ui/button'
 import { cn } from '@/lib/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '../ui/tooltip'
 
 const RefreshButton = () => {
 	const queryClient = useQueryClient()
@@ -23,14 +29,23 @@ const RefreshButton = () => {
 	}
 
 	return (
-		<div
-			onClick={handleClick}
-			className={`${cn(
-				buttonVariants({ variant: 'ghost', size: 'icon' })
-			)} hidden cursor-pointer items-center justify-center standalone:flex`}
-		>
-			<RotateCw className={isSpinning ? 'animate-refresh-spin' : ''} />
-		</div>
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div
+						onClick={handleClick}
+						className={`${cn(
+							buttonVariants({ variant: 'ghost', size: 'icon' })
+						)} hidden cursor-pointer items-center justify-center transition-all standalone:flex`}
+					>
+						<RotateCw className={isSpinning ? 'animate-refresh-spin' : ''} />
+					</div>
+				</TooltipTrigger>
+				<TooltipContent>
+					<p>Refresh</p>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
 

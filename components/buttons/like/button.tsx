@@ -6,6 +6,12 @@ import { useState } from 'react'
 import { handleLike } from './action'
 import { catchError } from '@/lib/utils'
 import { LikeButtonProps, PostData } from './utils'
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const LikeButton = ({
 	isLikedByCurrentUser,
@@ -35,26 +41,35 @@ const LikeButton = ({
 		},
 	})
 	return (
-		<div className='flex items-center'>
-			<div
-				onClick={() => mutate(data)}
-				className='cursor-pointer rounded-full p-1 transition-all duration-75 hover:text-red-500 active:scale-125'
-			>
-				{!isLiked ? (
-					<Heart height={18} width={18} />
-				) : (
-					<Heart
-						height={18}
-						width={18}
-						fill='rgb(239 68 68)'
-						className='text-red-500'
-					/>
-				)}
-			</div>
-			<p className={`text-sm ${isLiked ? 'font-bold text-red-500' : ''}`}>
-				{likeAmount}
-			</p>
-		</div>
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className='flex items-center'>
+						<div
+							onClick={() => mutate(data)}
+							className='cursor-pointer rounded-full p-1 transition-all duration-75 hover:text-red-500 active:scale-125'
+						>
+							{!isLiked ? (
+								<Heart height={18} width={18} />
+							) : (
+								<Heart
+									height={18}
+									width={18}
+									fill='rgb(239 68 68)'
+									className='text-red-500'
+								/>
+							)}
+						</div>
+						<p className={`text-sm ${isLiked ? 'font-bold text-red-500' : ''}`}>
+							{likeAmount}
+						</p>
+					</div>
+				</TooltipTrigger>
+				<TooltipContent>
+					<p>Like</p>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
 

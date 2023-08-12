@@ -16,9 +16,9 @@ export const SignInButton = (props: ButtonProps) => {
 				signIn('google')
 			}}
 			{...props}
+			className='flex items-center justify-center transition-all'
 		>
-			{isSigningIn && <Loader2 className='mr-2 h-5 w-5 animate-spin' />}
-			Login
+			{isSigningIn ? <Loader2 className='h-5 w-5 animate-spin' /> : 'Login'}
 		</Button>
 	)
 }

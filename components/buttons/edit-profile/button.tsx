@@ -31,6 +31,12 @@ import {
 import { catchError } from '@/lib/utils'
 import { type ProfileInfoProps, editFormSchema } from './utils'
 import saveProfileInfo from './action'
+import {
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Tooltip } from '@radix-ui/react-tooltip'
 
 export const EditProfileButton = ({
 	bio,
@@ -75,11 +81,20 @@ export const EditProfileButton = ({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogTrigger asChild>
-				<Button variant='ghost' size='sm' aria-label='Edit Profile'>
-					<Edit3 size={16} />
-				</Button>
-			</DialogTrigger>
+			<TooltipProvider>
+				<Tooltip>
+					<DialogTrigger asChild>
+						<TooltipTrigger asChild>
+							<Button variant='ghost' size='icon' aria-label='Edit Profile'>
+								<Edit3 size={16} />
+							</Button>
+						</TooltipTrigger>
+					</DialogTrigger>
+					<TooltipContent>
+						<p>Edit</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
 			<DialogContent
 				className='sm:max-w-[425px]'
 				onEscapeKeyDown={(e) => (isLoading ? e.preventDefault() : {})}
