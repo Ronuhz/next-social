@@ -12,7 +12,7 @@ import { User } from 'lucide-react'
 const MobileNav = () => {
 	return (
 		<header className='fixed top-0 z-20 block w-screen sm:hidden'>
-			<nav className='standalone:safe-top relative  flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
+			<nav className='standalone:safe-top relative flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
 				<SignedIn>
 					<Profile />
 				</SignedIn>
@@ -39,7 +39,7 @@ const Profile = async () => {
 				<Button
 					variant='ghost'
 					size='icon'
-					className='standalone:safe-top-as-margin absolute left-1 m-2 mt-3 rounded-full'
+					className='absolute bottom-2 left-3 rounded-full'
 				>
 					<ProfilePic
 						username={user?.username ?? ''}
