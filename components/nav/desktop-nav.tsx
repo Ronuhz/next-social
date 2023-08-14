@@ -1,6 +1,6 @@
-import { SignOutDropdownItem } from './buttons/auth-buttons'
+import { SignOutDropdownItem } from '../buttons/auth-buttons'
 import Link from 'next/link'
-import { Separator } from './ui/separator'
+import { Separator } from '../ui/separator'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,18 +8,18 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { Button } from './ui/button'
-import NewPostButton from './buttons/new-post/button'
+} from '../ui/dropdown-menu'
+import { Button } from '../ui/button'
+import NewPostButton from '../buttons/new-post/button'
 import { getCurrentUser } from '@/lib/session'
 import { User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import ProfilePic from '@/app/user/_components/profile-pic'
-import { SignedIn } from './auth-helpers'
+import { SignedIn } from '../auth-helpers'
 
-const MainNav = async () => {
+const DesktopNav = async () => {
 	return (
-		<header className='fixed top-0 z-20 w-screen'>
+		<header className='fixed top-0 z-20 hidden w-screen sm:block'>
 			<nav className='standalone:safe-top flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
@@ -79,4 +79,4 @@ const ProfileDropdown = async () => {
 	)
 }
 
-export default MainNav
+export default DesktopNav

@@ -67,7 +67,7 @@ model Post {
   userId    String
   likes     Like[]
 
-  @@index([userId])
+  @@index([userId, id])
 }
 
 model Like {

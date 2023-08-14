@@ -34,6 +34,25 @@ export function getTimeAgo(createdDate: Date) {
 	}
 }
 
+export function shortenNumber(number: number): string {
+	const abbreviations = ['', 'K', 'M', 'B', 'T']
+	let tier = 0
+
+	while (number >= 1000 && tier < abbreviations.length - 1) {
+		number /= 1000
+		tier++
+	}
+
+	let precision = 1
+	if (tier === 1 && number >= 1 && number < 10) {
+		precision = 3
+	}
+
+	const formattedNumber = number.toFixed(precision).replace(/\.?0+$/, '')
+
+	return formattedNumber + abbreviations[tier]
+}
+
 export function catchError(err: unknown) {
 	return toast({
 		variant: 'destructive',

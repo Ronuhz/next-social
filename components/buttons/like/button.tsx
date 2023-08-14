@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { handleLike } from './action'
-import { catchError } from '@/lib/utils'
+import { catchError, shortenNumber } from '@/lib/utils'
 import { LikeButtonProps, PostData } from './utils'
 import {
 	Tooltip,
@@ -61,7 +61,7 @@ const LikeButton = ({
 							)}
 						</div>
 						<p className={`text-sm ${isLiked ? 'font-bold text-red-500' : ''}`}>
-							{likeAmount}
+							{shortenNumber(likeAmount)}
 						</p>
 					</div>
 				</TooltipTrigger>

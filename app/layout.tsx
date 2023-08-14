@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import MainNav from '@/components/main-nav'
+import MainNav from '@/components/nav/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import AppleSplashes from '@/public/assets/splash/apple-splashes'
 import Providers from '@/components/providers'
