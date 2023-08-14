@@ -39,12 +39,12 @@ const Profile = async () => {
 				<Button
 					variant='ghost'
 					size='icon'
-					className='absolute left-1 m-2 mt-3 rounded-full'
+					className='standalone:safe-top-as-margin absolute left-1 m-2 mt-3 rounded-full'
 				>
 					<ProfilePic
 						username={user?.username ?? ''}
 						image={user?.profilePicture}
-						className='standalone:safe-top-as-margin h-10 w-10'
+						className='h-10 w-10'
 					/>
 				</Button>
 			</SheetTrigger>

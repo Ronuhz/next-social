@@ -5,6 +5,7 @@ import MainNav from '@/components/nav/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import AppleSplashes from '@/public/assets/splash/apple-splashes'
 import Providers from '@/components/providers'
+import NewPostButton from '@/components/buttons/new-post/button'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,6 +36,9 @@ export default function RootLayout({
 				<Providers>
 					<MainNav />
 					<main className='mt-14 standalone:mt-24 standalone:sm:mt-14'>
+						<div className='fixed bottom-1 right-1 m-4 block sm:hidden'>
+							<NewPostButton />
+						</div>
 						{children}
 						<Toaster />
 					</main>
