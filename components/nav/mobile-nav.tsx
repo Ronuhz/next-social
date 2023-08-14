@@ -44,7 +44,7 @@ const Profile = async () => {
 					<ProfilePic
 						username={user?.username ?? ''}
 						image={user?.profilePicture}
-						className='h-10 w-10'
+						className='standalone:safe-top-as-margin h-10 w-10'
 					/>
 				</Button>
 			</SheetTrigger>
