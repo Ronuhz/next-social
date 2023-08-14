@@ -4,10 +4,16 @@ import { getCurrentUser } from '@/lib/session'
 import { prisma } from '@/lib/prisma'
 import ProfilePic from '@/app/user/_components/profile-pic'
 import { SignedIn } from '../auth-helpers'
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet'
+import {
+	Sheet,
+	SheetClose,
+	SheetContent,
+	SheetHeader,
+	SheetTrigger,
+} from '../ui/sheet'
 import { Button } from '../ui/button'
-import { SignOutDropdownItem } from '../buttons/auth-buttons'
-import { User } from 'lucide-react'
+import { LogoutSheetItem } from '../buttons/auth-buttons'
+import { Settings, User } from 'lucide-react'
 
 const MobileNav = () => {
 	return (
@@ -34,6 +40,7 @@ const Profile = async () => {
 	})
 
 	return (
+		// TODO: Sheet looks off on standalone, it needs to be higher up
 		<Sheet>
 			<SheetTrigger asChild>
 				<Button
@@ -50,14 +57,32 @@ const Profile = async () => {
 			</SheetTrigger>
 			<SheetContent
 				side='left'
-				className='standalone:safe-top-as-margin flex flex-col'
+				className='standalone:safe-top-as-margin flex flex-col px-12'
 			>
+				<SheetHeader>
+					<div className='mb-5 flex flex-col items-start justify-center'>
+						<Link href='/user'>
+							<SheetClose>
+								<ProfilePic
+									username={user?.username ?? ''}
+									image={user?.profilePicture}
+									className='h-14 w-14'
+								/>
+								<p className='mt-2 text-xl font-bold'>{user?.username ?? ''}</p>
+							</SheetClose>
+						</Link>
+					</div>
+				</SheetHeader>
 				<SheetEntry href='/user'>
-					<User className='mr-2 h-4 w-4' />
+					<User className='mr-4' size={24} />
 					Profile
 				</SheetEntry>
+				<SheetEntry href='/settings'>
+					<Settings className='mr-4' size={24} />
+					Settings
+				</SheetEntry>
 				<SheetEntry href='/'>
-					<SignOutDropdownItem />
+					<LogoutSheetItem />
 				</SheetEntry>
 			</SheetContent>
 		</Sheet>
@@ -73,7 +98,7 @@ const SheetEntry = ({
 }) => {
 	return (
 		<Link href={href}>
-			<SheetClose className='flex items-center'>{children}</SheetClose>
+			<SheetClose className='flex items-center text-2xl'>{children}</SheetClose>
 		</Link>
 	)
 }

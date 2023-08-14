@@ -78,16 +78,17 @@
 }
 
 @layer utilities {
+	.balance {
+		flex-wrap: balance;
+	}
+
 	.safe-top {
 		padding-top: env(safe-area-inset-top);
 	}
+
 	.safe-top-as-margin {
 		margin-top: env(safe-area-inset-top);
 	}
-}
-
-.balance {
-	flex-wrap: balance;
 }
 
 /* width */

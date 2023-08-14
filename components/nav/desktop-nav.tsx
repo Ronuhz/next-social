@@ -12,7 +12,7 @@ import {
 import { Button } from '../ui/button'
 import NewPostButton from '../buttons/new-post/button'
 import { getCurrentUser } from '@/lib/session'
-import { User } from 'lucide-react'
+import { Settings, User } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import ProfilePic from '@/app/user/_components/profile-pic'
 import { SignedIn } from '../auth-helpers'
@@ -65,6 +65,12 @@ const ProfileDropdown = async () => {
 						<Link href='/user'>
 							<User className='mr-2 h-4 w-4' />
 							<span>Profile</span>
+						</Link>
+					</DropdownMenuItem>
+					<DropdownMenuItem className='cursor-pointer' asChild>
+						<Link href='/settings'>
+							<Settings className='mr-2 h-4 w-4' />
+							<span>Settings</span>
 						</Link>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>

@@ -22,6 +22,19 @@ export const SignInButton = (props: ButtonProps) => {
 		</Button>
 	)
 }
+
+export const LogoutSheetItem = () => {
+	return (
+		<span
+			className='flex w-full cursor-pointer items-center'
+			onClick={() => signOut()}
+		>
+			<LogOut className='mr-4' size={24} />
+			<span>Logout</span>
+		</span>
+	)
+}
+
 export const SignOutDropdownItem = () => {
 	return (
 		<span

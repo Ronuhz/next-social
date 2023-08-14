@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster'
 import AppleSplashes from '@/public/assets/splash/apple-splashes'
 import Providers from '@/components/providers'
 import NewPostButton from '@/components/buttons/new-post/button'
+import { SignedIn } from '@/components/auth-helpers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,9 +36,11 @@ export default function RootLayout({
 			<body className={`${inter.className}`}>
 				<Providers>
 					<MainNav />
-					<main className='mt-14 standalone:mt-24 standalone:sm:mt-14'>
+					<main className='mt-14'>
 						<div className='fixed bottom-1 right-1 m-4 block sm:hidden'>
-							<NewPostButton />
+							<SignedIn>
+								<NewPostButton />
+							</SignedIn>
 						</div>
 						{children}
 						<Toaster />
