@@ -13,12 +13,16 @@ import {
 } from '../ui/sheet'
 import { Button } from '../ui/button'
 import { LogoutSheetItem } from '../buttons/auth-buttons'
-import { Settings, User } from 'lucide-react'
+import { CalendarDays, Settings, User } from 'lucide-react'
+import { Cross2Icon } from '@radix-ui/react-icons'
+import { getMonthAndYearFromDate } from '@/lib/utils'
+
+export const dynamic = 'static'
 
 const MobileNav = () => {
 	return (
-		<header className='fixed top-0 z-20 block w-screen sm:hidden'>
-			<nav className='standalone:safe-top relative flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
+		<header className='fixed top-0 z-20 mb-10 block w-screen sm:hidden'>
+			<nav className='standalone:safe-top flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
 				<SignedIn>
 					<Profile />
 				</SignedIn>
@@ -36,7 +40,7 @@ const Profile = async () => {
 
 	const user = await prisma.user.findUnique({
 		where: { email: currentUser?.email! },
-		select: { username: true, profilePicture: true },
+		select: { username: true, profilePicture: true, createdAt: true },
 	})
 
 	return (
@@ -55,12 +59,17 @@ const Profile = async () => {
 					/>
 				</Button>
 			</SheetTrigger>
+
+			{/* Visible Sheet */}
 			<SheetContent
 				side='left'
-				className='standalone:safe-top-as-margin flex flex-col px-12'
+				className='standalone:safe-top flex flex-col pl-12'
+				autoFocus={false}
+				hideCloseButton={true}
 			>
-				<SheetHeader>
-					<div className='mb-5 flex flex-col items-start justify-center'>
+				{/* User information */}
+				<SheetHeader className='relative my-2'>
+					<div className='flex flex-col items-start justify-center'>
 						<Link href='/user'>
 							<SheetClose>
 								<ProfilePic
@@ -68,11 +77,23 @@ const Profile = async () => {
 									image={user?.profilePicture}
 									className='h-14 w-14'
 								/>
-								<p className='mt-2 text-xl font-bold'>{user?.username ?? ''}</p>
+								<p className='mt-2 text-left text-xl font-bold'>
+									{user?.username ?? ''}
+								</p>
+								<p className='inline-flex items-center gap-1 text-base text-muted-foreground'>
+									<CalendarDays size={18} />
+									Joined {getMonthAndYearFromDate(user?.createdAt!)}
+								</p>
 							</SheetClose>
 						</Link>
 					</div>
+					<SheetClose className=' absolute -right-3 -top-1 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary'>
+						<Cross2Icon className='h-4 w-4' />
+						<span className='sr-only'>Close</span>
+					</SheetClose>
 				</SheetHeader>
+
+				{/* Entries aka. actions (links) */}
 				<SheetEntry href='/user'>
 					<User className='mr-4' size={24} />
 					Profile

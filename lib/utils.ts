@@ -34,6 +34,11 @@ export function getTimeAgo(createdDate: Date) {
 	}
 }
 
+export function getMonthAndYearFromDate(date: Date) {
+	const options = { year: 'numeric', month: 'long' } as const
+	return date.toLocaleDateString('en-US', options)
+}
+
 export function shortenNumber(number: number): string {
 	const abbreviations = ['', 'K', 'M', 'B', 'T']
 	let tier = 0

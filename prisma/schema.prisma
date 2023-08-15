@@ -55,6 +55,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   likes          Like[]
+  createdAt      DateTime  @default(now())
 
   @@index([email, id])
 }
