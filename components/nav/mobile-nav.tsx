@@ -21,8 +21,8 @@ export const dynamic = 'static'
 
 const MobileNav = () => {
 	return (
-		<header className='fixed top-0 z-20 w-screen sm:hidden'>
-			<nav className='standalone:safe-top flex h-14 w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
+		<header className='sticky top-0 z-20 w-screen sm:hidden'>
+			<nav className='standalone:safe-top flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
 				<SignedIn>
 					<Profile />
 				</SignedIn>
@@ -64,6 +64,7 @@ const Profile = async () => {
 			<SheetContent
 				side='left'
 				className='standalone:safe-top flex flex-col pl-12'
+				autoFocus={false}
 				hideCloseButton={true}
 			>
 				{/* User information */}
