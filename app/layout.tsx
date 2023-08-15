@@ -30,7 +30,10 @@ export default function RootLayout({
 			style={{ WebkitTapHighlightColor: 'transparent' }}
 			suppressHydrationWarning
 		>
-			<body className={`${inter.className} standalone:safe-top`}>
+			<head>
+				<AppleSplashes />
+			</head>
+			<body className={`${inter.className}`}>
 				<Providers>
 					<MainNav />
 					<main className='mt-14'>
