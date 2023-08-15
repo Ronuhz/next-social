@@ -21,14 +21,16 @@ export const dynamic = 'static'
 
 const MobileNav = () => {
 	return (
-		<header className='sticky top-0 z-20 w-screen sm:hidden'>
-			<nav className='standalone:safe-top flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
-				<SignedIn>
-					<Profile />
-				</SignedIn>
-				<Link href='/'>
-					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
-				</Link>
+		<header className='fixed top-0 z-20 block w-screen sm:hidden'>
+			<nav className='mb-safe-area-inset-top'>
+				<div className='flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end standalone:pt-safe-area-inset-top'>
+					<SignedIn>
+						<Profile />
+					</SignedIn>
+					<Link href='/'>
+						<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
+					</Link>
+				</div>
 			</nav>
 			<Separator />
 		</header>

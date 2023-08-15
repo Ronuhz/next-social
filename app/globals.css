@@ -34,6 +34,8 @@
 		--ring: 240 5% 64.9%;
 
 		--radius: 0.5rem;
+
+		--safe-area-inset-top: env(safe-area-inset-top);
 	}
 
 	.dark {

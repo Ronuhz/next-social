@@ -82,6 +82,9 @@ module.exports = {
 			screens: {
 				standalone: { raw: '(display-mode: standalone)' },
 			},
+			spacing: {
+				'safe-area-inset-top': 'var(--safe-area-inset-top)'
+			}
 		},
 	},
 	plugins: [require('tailwindcss-animate')],
