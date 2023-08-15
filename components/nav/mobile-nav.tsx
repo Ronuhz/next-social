@@ -44,7 +44,6 @@ const Profile = async () => {
 	})
 
 	return (
-		// TODO: Sheet looks off on standalone, it needs to be higher up
 		<Sheet>
 			<SheetTrigger asChild>
 				<Button
@@ -63,8 +62,7 @@ const Profile = async () => {
 			{/* Visible Sheet */}
 			<SheetContent
 				side='left'
-				className='standalone:safe-top flex flex-col pl-12'
-				autoFocus={false}
+				className='flex flex-col pl-12 standalone:pt-safe-area-inset-top'
 				hideCloseButton={true}
 			>
 				{/* User information */}
@@ -119,7 +117,9 @@ const SheetEntry = ({
 }) => {
 	return (
 		<Link href={href}>
-			<SheetClose className='flex items-center text-2xl'>{children}</SheetClose>
+			<SheetClose className='flex w-full items-center  text-2xl'>
+				{children}
+			</SheetClose>
 		</Link>
 	)
 }

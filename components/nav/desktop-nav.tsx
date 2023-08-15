@@ -20,7 +20,7 @@ import { SignedIn } from '../auth-helpers'
 const DesktopNav = async () => {
 	return (
 		<header className='fixed top-0 z-20 hidden w-screen sm:block'>
-			<nav className='standalone:safe-top flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end'>
+			<nav className='flex w-full flex-row items-center justify-between px-6 pb-1 pt-2 backdrop-blur-lg sm:px-8 standalone:items-end standalone:pt-safe-area-inset-top'>
 				<Link href='/'>
 					<h1 className='text-lg font-bold sm:text-2xl'>NEXT Social</h1>
 				</Link>
