@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
 	title: 'NEXT Social',
 	description: 'A truly NEXT generation social platform.',
+	manifest: '/manifest.json',
 	appleWebApp: { statusBarStyle: 'black-translucent' },
 	viewport: { initialScale: 1, viewportFit: 'cover', userScalable: false },
 }
@@ -31,12 +32,11 @@ export default function RootLayout({
 		>
 			<head>
 				<AppleSplashes />
-				<link rel='manifest' href='/manifest.json' />
 			</head>
 			<body className={`${inter.className}`}>
 				<Providers>
 					<MainNav />
-					<main className='mt-14'>
+					<main className='mt-14 pt-safe-area-inset-top'>
 						<div className='fixed bottom-1 right-1 m-4 block sm:hidden'>
 							<SignedIn>
 								<NewPostButton />
