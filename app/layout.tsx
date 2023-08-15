@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 	title: 'NEXT Social',
 	description: 'A truly NEXT generation social platform.',
 	appleWebApp: { statusBarStyle: 'black-translucent' },
-	manifest: '/manifest.json',
 	viewport: { initialScale: 1, viewportFit: 'cover', userScalable: false },
 }
 
@@ -32,6 +31,7 @@ export default function RootLayout({
 		>
 			<head>
 				<AppleSplashes />
+				<link rel='manifest' href='/manifest.json' />
 			</head>
 			<body className={`${inter.className}`}>
 				<Providers>
