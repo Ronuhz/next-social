@@ -22,7 +22,7 @@ export const dynamic = 'static'
 const MobileNav = () => {
 	return (
 		<header className='fixed top-0 z-20 block w-screen sm:hidden'>
-			<nav className='standalone:safe-top flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end'>
+			<nav className='flex min-h-[3.5rem] w-full items-center justify-center py-3 backdrop-blur-lg standalone:items-end standalone:pt-safe-area-inset-top'>
 				<SignedIn>
 					<Profile />
 				</SignedIn>
